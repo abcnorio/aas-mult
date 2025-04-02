@@ -27,7 +27,7 @@ For AI/ML inference the [vsgan-tensorrt docker](https://github.com/styler00dolla
 
 ## Overview
 
-The software `[ntsc-rs](https://ntsc.rs)` written in `[Rust](https://www.rust-lang.org)` allows users to tweak videos and images to simulate old analogue TV, (S)VHS, betacam, and other associated artifacts. As a consequence the outcome looks like an old VHS tape with all visible and known artifacts in dependence to the degree previously configured. This work is based on [composite-video-simulator](https://github.com/joncampbell123/composite-video-simulator) and [ntscqt](https://github.com/JargeZ/ntscqt) which contains a short outline of typical artifacts along with screenshots. Amongst those are(dot crawl, ringing, chroma/ luma delay error aka color bleeding, rainbow effects, chrominance noise, head switching noise, long/ extended play, luminance noise, oversaturation - to name only the most predominant artifacts. An extensive overview about video artficats can be found on the [AV artifact atlas](http://www.avartifactatlas.com/tags.html#video).
+The software [`ntsc-rs`](https://ntsc.rs) written in [`Rust`](https://www.rust-lang.org) allows users to tweak videos and images to simulate old analogue TV, (S)VHS, betacam, and other associated artifacts. As a consequence the outcome looks like an old VHS tape with all visible and known artifacts in dependence to the degree previously configured. This work is based on [composite-video-simulator](https://github.com/joncampbell123/composite-video-simulator) and [ntscqt](https://github.com/JargeZ/ntscqt) which contains a short outline of typical artifacts along with screenshots. Amongst those are(dot crawl, ringing, chroma/ luma delay error aka color bleeding, rainbow effects, chrominance noise, head switching noise, long/ extended play, luminance noise, oversaturation - to name only the most predominant artifacts. An extensive overview about video artficats can be found on the [AV artifact atlas](http://www.avartifactatlas.com/tags.html#video).
 
 `ntsc-rs` has a GUI and a cli version. Configurations are stored in `.json` files. On the discussion forum of the github repo one can find profiles for certain historical environments like VHS, SVHS, betacam, analogue TV and much more - carefully selected and developed by users. Further down you can find a selection of published profiles. All can be used for simulation.
 
@@ -47,6 +47,8 @@ All options not covered by the `R` script call can be passthroughed via the '-g 
 ## Call
 
 To call the `R` script via `Rscript` is straightforward with several options:
+
+<details>
 
 ```bash
 $ ./svhs_sim_bash.r --help
@@ -123,6 +125,8 @@ options:
   -v, --verbose         show more infos [default: False]
 ```
 
+</details>
+
 The `R` script works with [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) so it can be called from the terminal.
 
 ## Options
@@ -133,6 +137,7 @@ The explanations of the options of the `R` script are:
 
 | Switch | Description | Default value |
 | --- | --- | --- | --- |
+
 | `-n`, `--ntscrs` | path to `ntsc-rs-cli` | `~/ntsc-rs/ntsc-rs-cli`|
 | `-b`, `--basejson` | path to control sheet | `` |
 | `-s`, `--startfolder` | base folder of image(s) or video(s) | `` |
