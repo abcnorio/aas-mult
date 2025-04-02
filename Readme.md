@@ -31,7 +31,7 @@ The software [`ntsc-rs`](https://ntsc.rs) written in [`Rust`](https://www.rust-l
 
 `ntsc-rs` has a GUI and a cli version. Configurations are stored in `.json` files. On the discussion forum of the github repo one can find profiles for certain historical environments like VHS, SVHS, betacam, analogue TV and much more - carefully selected and developed by users. Further down you can find a selection of published profiles. All can be used for simulation.
 
-So this setup allows to script the unattended generation of a large number of images or videos within a certain variation based on probabilities.
+So this setup allows to script the unattended generation of a large number of images or videos within a certain variation based on probabilities. The scripts were developed and tested under [Debian Linux](https://www.debian.org) (`bookworm`, 12.9).
 
 
 ## Implementation
@@ -135,7 +135,7 @@ The explanations of the options of the `R` script are:
 
 <details>
 
-| Switch | Description | Default value | |
+| Switch | Description | Default value | Notes |
 | --- | --- | --- | --- |
 | `-n`, `--ntscrs` | path to `ntsc-rs-cli` | `~/ntsc-rs/ntsc-rs-cli`|
 | `-b`, `--basejson` | path to control sheet | `` |
@@ -196,30 +196,33 @@ The options to tweak the profile via sheet are below. For the statistical part t
 
 The configuration names match the GUI version of `ntsc-rs`. Each `X` in the first colum marks whether the value can be changed to tweak the profile.
 
+<details>
+
 | Tweak | Column | Description | Explanation | Notes |
 | --- | --- | --- | --- | --- |
-| | lfd | original counter | sheet is ordered alphabetically, this is the original order |
-| | subref.lfd | counter of sub categories | |
-| | lfdnam | counter | alphabetic order |
-| | configname | config name in `ntsc-rs` GUI | |
-| X | CH | changeable | can a value be changed by the script? Allows to fix values incl. sub-categories. |
-| | development | description of value development | |
-| X | LOW | lower limit | |
-| X | UP | upper limit | |
-| (X) | METHOD | reference anchor used | mode |
-| X | SD | standard deviation chosen | |
-| X | probs | probabilities in case of logical values | |
-| | probcalc | reference which type of distribution used | |
-| | DONE | internal ie. ignore | |
-| X | anchorPR | profile values | |
-| X | namePR | profile name | |
-| | default | default value | |
-| | min | minimum value | |
-| | max | maximum value | |
-| | type | type of variable | |
-| | digits | number of digits after comma | |
-| | categories | possible values | |
+| | `lfd` | original counter | sheet is ordered alphabetically, this is the original order |
+| | `subref.lfd` | counter of sub categories | |
+| | `lfdnam` | counter | alphabetic order |
+| | `configname` | config name in `ntsc-rs` GUI | |
+| X | `CH` | changeable | can a value be changed by the script? Allows to fix values incl. sub-categories. |
+| | `development` | description of value development | |
+| X | `LOW` | lower limit | |
+| X | `UP` | upper limit | |
+| (X) | `METHOD` | reference anchor used | mode |
+| X | `SD` | standard deviation chosen | |
+| X | `probs` | probabilities in case of logical values | |
+| | `probcalc` | reference which type of distribution used | |
+| | `DONE` | internal ie. ignore | |
+| X | `anchorPR` | profile values | |
+| X | `namePR` | profile name | |
+| | `default` | default value | |
+| | `min` | minimum value | |
+| | `max` | maximum value | |
+| | `type` | type of variable | |
+| | `digits` | number of digits after comma | |
+| | `categories` | possible values | |
 
+</details>
 
 ## Tweaking profiles via spreadsheet
 
@@ -243,20 +246,20 @@ The idea is simple - the script works for each category by drawing a value from 
 
 It is possible to use other probability distributions than the ones mentioned here. This requires some changes in the script that every R user with enough knowledge can do. Or one could add a general function to just passthroughs `R` code directly.
 
-### Categories (multiple, logical)
+#### Categories (multiple, logical)
 
 Categories can be either multiple or logical (two values possible). The handling is identical.
 
-- `probs` - This puts weight on the possible values. Weights are re-calculated as probabilities by the script that sum up to 1.
+- `probs` - this puts weight on the possible values. Weights are re-calculated as probabilities by the script that sum up to 1.
 
-### Linear increase (integer, float)
+#### Linear increase (integer, float)
 
 Linear increasing values of type integer or float use the distribution outline in the column `probcalc` which is a truncated normal distribution. This allows - as the name says - to truncate the normal distribution which fits the needs here perfectly well.
 
 - `SD` - standard deviation of the truncated normal distribution
-- `SD` if `EQUAL` is set and column `probcalc` contains `uniform`, a uniform distribution is applied. Then all values have the same probability 1/length(prob space).
+- `SD` - if `EQUAL` is set and column `probcalc` contains `uniform`, a uniform distribution is applied. Then all values have the same probability 1/length(prob space).
 
-### Non-linear increase
+#### Non-linear increase
 
 Non-linear increasing values of type "percent" have a range between 0 and 1 and can be handled like probabilities. Their nature is non-linear and one has to use the GUI practically to understand the non-linear nature and its visual impact on the output. To introduce statistical variation a [beta](https://en.wikipedia.org/wiki/Beta_distribution) distribution offers a range of variation that fits, mostly because it is very flexible in the way it [looks](https://en.wikipedia.org/wiki/Beta_distribution#/media/File:PDF_of_the_Beta_distribution.gif) and it is easy to create the parameters of a beta distribution by getting some values.
 
@@ -269,11 +272,11 @@ Non-linear increasing values of type "percent" have a range between 0 and 1 and 
 
 | Filename | Description |
 | --- | --- |
-| `svhs_basejson_empty.xlsx` | empty base `.json` sheet to use for statistical variation |
-| `svhs_basejson_svhs-example.xlsx` | example profile sheet with pre-defined variation for [SVHS]() |
-| `svhs_sim_helper.r` | contains all helper scripts |
-| `svhs_sim_bash.r` | `[Rscript](https://search.r-project.org/R/refmans/utils/html/Rscript.html)` call, suitable for `bash` under Linux, enable with `chmod +x svhs_sim_bash.r` |
-| `svhs_sim_manual.r` | manual running the `R` script under various scenarios (see comments in the script), should be used for Windows |
+| [`svhs_basejson_empty.xlsx`]() | empty base `.json` sheet to use for statistical variation |
+| [`svhs_basejson_svhs-example.xlsx`]() | example profile sheet with pre-defined variation for [SVHS]() |
+| [`svhs_sim_helper.r`]() | contains all helper scripts |
+| [`svhs_sim_bash.r`]() | [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) call, suitable for `bash` under Linux, enable with `chmod +x svhs_sim_bash.r` |
+| [`svhs_sim_manual.r`]() | manual running the `R` script under various scenarios (see comments in the script), should be used for Windows |
 
 
 ## `R` and its dependencies
@@ -285,7 +288,13 @@ Normally under windows binaries are downloaded and installed from an `R` repo (m
 The script requires several `R` packages: `openxlsx`, `jsonlite`, `EnvStats`, `DescTools`, `prevalence`, and `argparse`. The best is to install them on the terminal by just running `R`. Do not use a GUI like `rstudio` because although as an IDE it is great, for installation of `R` packages it is buggy which means it often breaks with strange errors whereas `R` on the terminal does not break during install. Within `R` the packages can be installed along with their dependencies typing
 
 ```R
-install.packages("packagename", dep=T)
+packs <- c("openxlsx",
+          "jsonlite",
+          "EnvStats",
+          "DescTools",
+          "prevalence",
+          "argparse")
+sapply(packs, function(x) install.packages(x, dep=T))
 ```
 
 
@@ -324,10 +333,15 @@ NO WARRANTY of any kind is involved here. There is no guarantee that the softwar
 ## License
 
 - R script [GPL v3](https://www.gnu.org/licenses/gpl-3.0.html)
-- every other software cited has its own licence - see links for details
+- every other software cited has its own licence - see links below for details
 
 
+## Cited software
 
+- [`ntsc-rs`](https://ntsc.rs)
+- [`R`](https://www.r-project.org)
+- [`rstudio`](https://posit.co/downloads)
+- [Debian Linux](https://www.debian.org)
 
 
 
