@@ -1,4 +1,3 @@
-```
 # (S)VHS simulation on a large number of images/ videos
 
 ## TOC
@@ -276,7 +275,7 @@ Non-linear increasing values of type "percent" have a range between 0 and 1 and 
 ## `R` and its dependencies
 
 `R` on Linux is best installed from the `[r-project](https://cloud.r-project.org/bin/linux)` page. There are instructions for various  distributions.
-Under Linux packages are compiled and not downloaded as binaries. For that one needs a basic compilation environment and if `dev' packages are missing, the `R` package install routine usually give out error messages that contain information which package is missing exactly. So installation is in most cases straightforward.
+Under Linux packages are compiled and not downloaded as binaries. For that one needs a basic compilation environment and if `dev' packages are missing, the `R` package install routine usually give out error messages that contain helpful information which package is missing exactly. So installation is in most cases straightforward.
 Normally under windows binaries are downloaded and installed from an `R` repo (mirror). Then no compilation is necessary.
 
 The script requires several `R` packages: `openxlsx`, `jsonlite`, `EnvStats`, `DescTools`, `prevalence`, and `argparse`. The best is to install them on the terminal by just running `R`. Do not use a GUI like `rstudio` because although as an IDE it is great, for installation of `R` packages it is buggy which means it often breaks with strange errors whereas `R` on the terminal does not break during install. Within `R` the packages can be installed along with their dependencies typing
