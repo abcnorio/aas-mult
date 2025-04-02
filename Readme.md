@@ -135,9 +135,8 @@ The explanations of the options of the `R` script are:
 
 <details>
 
-| Switch | Description | Default value |
+| Switch | Description | Default value | |
 | --- | --- | --- | --- |
-
 | `-n`, `--ntscrs` | path to `ntsc-rs-cli` | `~/ntsc-rs/ntsc-rs-cli`|
 | `-b`, `--basejson` | path to control sheet | `` |
 | `-s`, `--startfolder` | base folder of image(s) or video(s) | `` |
