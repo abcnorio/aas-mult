@@ -187,6 +187,10 @@ The number of possibilities `ntsc-rs` offers is huge:
 
 The following screenshot shows the sheet for the profile SVHS.
 
+<details>
+![sheet example](basejsonsheet.png)
+</details>
+
 The options to tweak the profile via sheet are below. For the statistical part there are different cases:
 
 - logical (uniform distribution)
@@ -244,24 +248,24 @@ The idea is simple - the script works for each category by drawing a value from 
 - create a complete probability space of all possible values
 - put one's own probability distribution over the probability space and draw a random value from that (per category)
 
-It is possible to use other probability distributions than the ones mentioned here. This requires some changes in the script that every R user with enough knowledge can do. Or one could add a general function to just passthroughs `R` code directly.
+It is possible to use other probability distributions than the ones mentioned here. This requires some changes in the script that every R user with enough knowledge can do. Or one could add a general function to passthrough `R` code directly.
 
 #### Categories (multiple, logical)
 
-Categories can be either multiple or logical (two values possible). The handling is identical.
+Categories can be either `multiple` (categories) or `logical` (two values possible). The handling is identical.
 
 - `probs` - this puts weight on the possible values. Weights are re-calculated as probabilities by the script that sum up to 1.
 
 #### Linear increase (integer, float)
 
-Linear increasing values of type integer or float use the distribution outline in the column `probcalc` which is a truncated normal distribution. This allows - as the name says - to truncate the normal distribution which fits the needs here perfectly well.
+Linear increasing values of type `integer` or `float` use the distribution outline in the column `probcalc` which is a truncated normal distribution. This allows - as the name says - to truncate the normal distribution which fits the needs here perfectly well.
 
 - `SD` - standard deviation of the truncated normal distribution
 - `SD` - if `EQUAL` is set and column `probcalc` contains `uniform`, a uniform distribution is applied. Then all values have the same probability 1/length(prob space).
 
 #### Non-linear increase
 
-Non-linear increasing values of type "percent" have a range between 0 and 1 and can be handled like probabilities. Their nature is non-linear and one has to use the GUI practically to understand the non-linear nature and its visual impact on the output. To introduce statistical variation a [beta](https://en.wikipedia.org/wiki/Beta_distribution) distribution offers a range of variation that fits, mostly because it is very flexible in the way it [looks](https://en.wikipedia.org/wiki/Beta_distribution#/media/File:PDF_of_the_Beta_distribution.gif) and it is easy to create the parameters of a beta distribution by getting some values.
+Non-linear increasing values of type `percent` have a range between 0 and 1 and can be handled like probabilities. Their nature is non-linear and one has to use the GUI practically to understand the non-linear nature and its visual impact on the output. To introduce statistical variation a [beta](https://en.wikipedia.org/wiki/Beta_distribution) distribution offers a range of variation that fits, mostly because it is very flexible in the way it [looks](https://en.wikipedia.org/wiki/Beta_distribution#/media/File:PDF_of_the_Beta_distribution.gif) and it is easy to create the parameters of a beta distribution by getting some values.
 
 - `LOW` - choose a lower bound
 - `UP` - choose an uppper bound
