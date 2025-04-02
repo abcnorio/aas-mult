@@ -188,7 +188,9 @@ The number of possibilities `ntsc-rs` offers is huge:
 The following screenshot shows the sheet for the profile SVHS.
 
 <details>
-![sheet example](basejsonsheet.png)
+
+![sheet example](./basejsonsheet.png)
+
 </details>
 
 The options to tweak the profile via sheet are below. For the statistical part there are different cases:
