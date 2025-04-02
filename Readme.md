@@ -1,4 +1,4 @@
-# (S)VHS simulation on a large number of images/ videos
+# (S)VHS simulation on a large number of images/ videos using ntsc-rs
 
 ## TOC
 
@@ -8,7 +8,7 @@
 
 ## Goal
 
-The R script provided here allows to script `ntsc-rs` for an arbitrary number of iamges + videos based on a profile using the `.json` format of `ntsc-rs`. It introduces a certain amount of variation arranged by the user using a simple spreadsheet. In the spreadsheet the user can configure how the variation should take place for *every parameter* possibly by `ntsc-rs`.
+The `R` script provided allows to script [`ntsc-rs`](https://ntsc.rs) for an arbitrary number of iamges + videos based on a profile using the `.json` format of `ntsc-rs`. It introduces a certain amount of variation arranged by the user using a simple spreadsheet. In the spreadsheet the user can configure how the variation should take place for *every parameter* possibly by `ntsc-rs`.
 
 
 ## Use case
