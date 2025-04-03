@@ -164,17 +164,164 @@ The explanations of the options of the `R` script are:
 
 ## Artifact profiles
 
-The following profiles can be found on the [github repo]() of `ntsc-rs`. The credit goes to the selected users who developed and kindly published it:
+The following profiles can be found on the [github repo]() of `ntsc-rs`. The credit goes to the selected users who developed and kindly published it. The `R` script `svhs_sim_get-presets-bash.r` collects all `zip` and `json` files from the github discussion subsection [`presets`](https://github.com/valadaptive/ntsc-rs/discussions/categories/presets) of `ntsc-rs`. Those are [status quo 2025-04-03]:
 
-- VHS [DL]()
-- SVHS [DL]()
-- betacam [DL]()
-- analogue TV [DL]()
--
--
--
--
--
+<details>
+
+- [80s-commercial.json](https://github.com/valadaptive/ntsc-rs/files/15410576/80s-commercial.json)
+- [hs-u780-2.json](https://github.com/valadaptive/ntsc-rs/files/15443941/hs-u780-2.json)
+- [TDK-EHG.json](https://github.com/valadaptive/ntsc-rs/files/15422887/TDK-EHG.json)
+- [AV_EFCT.json](https://github.com/valadaptive/ntsc-rs/files/15423840/AV_EFCT.json)
+- [AV_EFFECT2.json](https://github.com/valadaptive/ntsc-rs/files/15424950/AV_EFFECT2.json)
+- [ccardnewest.json](https://github.com/valadaptive/ntsc-rs/files/15444099/ccardnewest.json)
+- [ntsc-rs_cvbs6.json](https://github.com/valadaptive/ntsc-rs/files/15445236/ntsc-rs_cvbs6.json)
+- [ANALOG_TV_EFFECT1.json](https://github.com/valadaptive/ntsc-rs/files/15459398/ANALOG_TV_EFFECT1.json)
+- [bluecoolman_VCRRecordingV4.json](https://github.com/valadaptive/ntsc-rs/files/15474769/bluecoolman_VCRRecordingV4.json)
+- [bluecoolman_VCRRecordingV5.json](https://github.com/user-attachments/files/16182866/bluecoolman_VCRRecordingV5.json)
+- [dani.s.vhs.preset.v2.2.json](https://github.com/user-attachments/files/19110897/dani.s.vhs.preset.v2.2.json)
+- [dani.s.vhs.preset.json](https://github.com/user-attachments/files/16193979/dani.s.vhs.preset.json)
+- [dani.s.vhs.preset.v1.1.json](https://github.com/user-attachments/files/16283956/dani.s.vhs.preset.v1.1.json)
+- [dani.s.vhs.preset.v1.2.json](https://github.com/user-attachments/files/16741689/dani.s.vhs.preset.v1.2.json)
+- [dani.s.vhs.preset.v1.3.json](https://github.com/user-attachments/files/16874765/dani.s.vhs.preset.v1.3.json)
+- [dani.s.vhs.preset.v1.4.json](https://github.com/user-attachments/files/17002772/dani.s.vhs.preset.v1.4.json)
+- [dani.s.vhs.preset.v1.5.json](https://github.com/user-attachments/files/17117471/dani.s.vhs.preset.v1.5.json)
+- [dani.s.vhs.preset.v1.6.json](https://github.com/user-attachments/files/17117472/dani.s.vhs.preset.v1.6.json)
+- [dani.s.vhs.preset.v1.7.json](https://github.com/user-attachments/files/17117475/dani.s.vhs.preset.v1.7.json)
+- [dani.s.vhs.preset.v1.8.json](https://github.com/user-attachments/files/17246501/dani.s.vhs.preset.v1.8.json)
+- [dani.s.vhs.preset.v.1.9.zip](https://github.com/user-attachments/files/17778250/dani.s.vhs.preset.v.1.9.zip)
+- [dani.s.vhs.preset.v2.0.json](https://github.com/user-attachments/files/18239317/dani.s.vhs.preset.v2.0.json)
+- [dani.s.vhs.preset.v2.1.json](https://github.com/user-attachments/files/18495663/dani.s.vhs.preset.v2.1.json)
+- [dani.s.vhs.preset.v2.2.json](https://github.com/user-attachments/files/19110897/dani.s.vhs.preset.v2.2.json)
+- [AV2.json](https://github.com/user-attachments/files/16349411/AV2.json)
+- [AV3.json](https://github.com/user-attachments/files/16362537/AV3.json)
+- [EMTEC.E-240.Preset.v1.json](https://github.com/user-attachments/files/16444514/EMTEC.E-240.Preset.v1.json)
+- [thrivervhsVersion1.json](https://github.com/user-attachments/files/16500835/thrivervhsVersion1.json)
+- [Low-Power-NTSC.json](https://github.com/user-attachments/files/16561262/Low-Power-NTSC.json)
+- [Worn-Tape2.json](https://github.com/user-attachments/files/16562244/Worn-Tape2.json)
+- [OpenReel.json](https://github.com/user-attachments/files/16562760/OpenReel.json)
+- [Rekcol.s.NTSC.Presets.zip](https://github.com/user-attachments/files/16614508/Rekcol.s.NTSC.Presets.zip)
+- [OG.Rekcol.s.NTSC.Presets.zip](https://github.com/user-attachments/files/16614542/OG.Rekcol.s.NTSC.Presets.zip)
+- [BetaMax.json](https://github.com/user-attachments/files/16576355/BetaMax.json)
+- [Composite.json](https://github.com/user-attachments/files/16576356/Composite.json)
+- [S-VHSEffectSP.json](https://github.com/user-attachments/files/16576357/S-VHSEffectSP.json)
+- [U-Matic.WIP.json](https://github.com/user-attachments/files/16576358/U-Matic.WIP.json)
+- [NTSC.Presets.zip](https://github.com/user-attachments/files/16756855/NTSC.Presets.zip)
+- [1998-T120.json](https://github.com/user-attachments/files/16736977/1998-T120.json)
+- [AV.Effect.V1.1.json](https://github.com/user-attachments/files/16751361/AV.Effect.V1.1.json)
+- [VHS-SP.json](https://github.com/user-attachments/files/16842979/VHS-SP.json)
+- [U-Matic.json](https://github.com/user-attachments/files/16842966/U-Matic.json)
+- [VHS-VP.json](https://github.com/user-attachments/files/16842975/VHS-VP.json)
+- [Worn-Tape3.json](https://github.com/user-attachments/files/16847777/Worn-Tape3.json)
+- [B.S.E-300.HG.v1.json](https://github.com/user-attachments/files/16868190/B.S.E-300.HG.v1.json)
+- [analog.drone.json](https://github.com/user-attachments/files/17121417/analog.drone.json)
+- [analogtv.json](https://github.com/user-attachments/files/17171531/analogtv.json)
+- [BetaCamSP.json](https://github.com/user-attachments/files/17177215/BetaCamSP.json)
+- [BetaMax.json](https://github.com/user-attachments/files/17177178/BetaMax.json)
+- [S-VHS-SP.json](https://github.com/user-attachments/files/17177179/S-VHS-SP.json)
+- [ntsc-rs_svhsDamaged.json](https://github.com/user-attachments/files/17201719/ntsc-rs_svhsDamaged.json)
+- [Basic.VHS.json](https://github.com/user-attachments/files/17264196/Basic.VHS.json)
+- [Broken.Clear.json](https://github.com/user-attachments/files/17264197/Broken.Clear.json)
+- [Clone.json](https://github.com/user-attachments/files/17264198/Clone.json)
+- [Clone2.json](https://github.com/user-attachments/files/17264199/Clone2.json)
+- [Damaged.json](https://github.com/user-attachments/files/17264200/Damaged.json)
+- [Default.json](https://github.com/user-attachments/files/17264201/Default.json)
+- [General.VHS.Effect.json](https://github.com/user-attachments/files/17264202/General.VHS.Effect.json)
+- [HD.Television.json](https://github.com/user-attachments/files/17264203/HD.Television.json)
+- [i_dont_see_anything.json](https://github.com/user-attachments/files/17264204/i_dont_see_anything.json)
+- [Inverted.json](https://github.com/user-attachments/files/17264205/Inverted.json)
+- [Lost.Chroma.json](https://github.com/user-attachments/files/17264206/Lost.Chroma.json)
+- [LQ.Television.json](https://github.com/user-attachments/files/17264207/LQ.Television.json)
+- [Noise.json](https://github.com/user-attachments/files/17264208/Noise.json)
+- [Old.VHS.json](https://github.com/user-attachments/files/17264209/Old.VHS.json)
+- [Scanlines.json](https://github.com/user-attachments/files/17264210/Scanlines.json)
+- [TV.Static.json](https://github.com/user-attachments/files/17264211/TV.Static.json)
+- [Untitled.json](https://github.com/user-attachments/files/17264212/Untitled.json)
+- [Wavy.Image.json](https://github.com/user-attachments/files/17264213/Wavy.Image.json)
+- [Basic.VHS.json](https://github.com/user-attachments/files/17264196/Basic.VHS.json)
+- [Broken.Clear.json](https://github.com/user-attachments/files/17264197/Broken.Clear.json)
+- [Clone.json](https://github.com/user-attachments/files/17264198/Clone.json)
+- [Clone2.json](https://github.com/user-attachments/files/17264199/Clone2.json)
+- [Damaged.json](https://github.com/user-attachments/files/17264200/Damaged.json)
+- [Default.json](https://github.com/user-attachments/files/17264201/Default.json)
+- [General.VHS.Effect.json](https://github.com/user-attachments/files/17264202/General.VHS.Effect.json)
+- [HD.Television.json](https://github.com/user-attachments/files/17264203/HD.Television.json)
+- [i_dont_see_anything.json](https://github.com/user-attachments/files/17264204/i_dont_see_anything.json)
+- [Inverted.json](https://github.com/user-attachments/files/17264205/Inverted.json)
+- [Lost.Chroma.json](https://github.com/user-attachments/files/17264206/Lost.Chroma.json)
+- [LQ.Television.json](https://github.com/user-attachments/files/17264207/LQ.Television.json)
+- [Noise.json](https://github.com/user-attachments/files/17264208/Noise.json)
+- [Old.VHS.json](https://github.com/user-attachments/files/17264209/Old.VHS.json)
+- [Scanlines.json](https://github.com/user-attachments/files/17264210/Scanlines.json)
+- [TV.Static.json](https://github.com/user-attachments/files/17264211/TV.Static.json)
+- [Untitled.json](https://github.com/user-attachments/files/17264212/Untitled.json)
+- [Wavy.Image.json](https://github.com/user-attachments/files/17264213/Wavy.Image.json)
+- [bluecoolman_VCRRecordingV8.json](https://github.com/user-attachments/files/17891322/bluecoolman_VCRRecordingV8.json)
+- [U-MaticSP.json](https://github.com/user-attachments/files/17614377/U-MaticSP.json)
+- [NTSC-RS.PRESETS.zip](https://github.com/user-attachments/files/17716155/NTSC-RS.PRESETS.zip)
+- [valll.json](https://github.com/user-attachments/files/18271620/valll.json)
+- [Sony.CCD-TRV35E.PAL.json](https://github.com/user-attachments/files/18389969/Sony.CCD-TRV35E.PAL.json)
+- [TV.Analog.Signal.Effect.json](https://github.com/user-attachments/files/18391464/TV.Analog.Signal.Effect.json)
+- [vertopal.com_Digital.Copy.json](https://github.com/user-attachments/files/18629343/vertopal.com_Digital.Copy.json)
+- [vertopal.com_Encrypted.json](https://github.com/user-attachments/files/18629344/vertopal.com_Encrypted.json)
+- [vertopal.com_First.Date.json](https://github.com/user-attachments/files/18629345/vertopal.com_First.Date.json)
+- [vertopal.com_Ghosting.Machine.json](https://github.com/user-attachments/files/18629346/vertopal.com_Ghosting.Machine.json)
+- [vertopal.com_Japanese.Retail.json](https://github.com/user-attachments/files/18629347/vertopal.com_Japanese.Retail.json)
+- [vertopal.com_NAVArip.json](https://github.com/user-attachments/files/18629348/vertopal.com_NAVArip.json)
+- [vertopal.com_Online.Sale.json](https://github.com/user-attachments/files/18629349/vertopal.com_Online.Sale.json)
+- [vertopal.com_PAL.Format.json](https://github.com/user-attachments/files/18629350/vertopal.com_PAL.Format.json)
+- [vertopal.com_DX.Sattelite.json](https://github.com/user-attachments/files/18629352/vertopal.com_DX.Sattelite.json)
+- [vertopal.com_DX.Variant.1.json](https://github.com/user-attachments/files/18629353/vertopal.com_DX.Variant.1.json)
+- [vertopal.com_DX.Variant.2.json](https://github.com/user-attachments/files/18629354/vertopal.com_DX.Variant.2.json)
+- [vertopal.com_Digital.json](https://github.com/user-attachments/files/18629356/vertopal.com_Digital.json)
+- [vertopal.com_DVD.Relay.json](https://github.com/user-attachments/files/18629357/vertopal.com_DVD.Relay.json)
+- [vertopal.com_1970s.Recording.json](https://github.com/user-attachments/files/18629358/vertopal.com_1970s.Recording.json)
+- [vertopal.com_1970s.Transmitter.json](https://github.com/user-attachments/files/18629359/vertopal.com_1970s.Transmitter.json)
+- [vertopal.com_1970s.Video.json](https://github.com/user-attachments/files/18629360/vertopal.com_1970s.Video.json)
+- [vertopal.com_1990s.Recorder.json](https://github.com/user-attachments/files/18629361/vertopal.com_1990s.Recorder.json)
+- [vertopal.com_2000s.PC.json](https://github.com/user-attachments/files/18629363/vertopal.com_2000s.PC.json)
+- [vertopal.com_2000s.json](https://github.com/user-attachments/files/18629364/vertopal.com_2000s.json)
+- [vertopal.com_Calling.off.Camcorders.json](https://github.com/user-attachments/files/18629365/vertopal.com_Calling.off.Camcorders.json)
+- [vertopal.com_Camcorder.json](https://github.com/user-attachments/files/18629366/vertopal.com_Camcorder.json)
+- [vertopal.com_Mini.DV.json](https://github.com/user-attachments/files/18629367/vertopal.com_Mini.DV.json)
+- [vertopal.com_Analog.json](https://github.com/user-attachments/files/18629368/vertopal.com_Analog.json)
+- [vertopal.com_Light.Analogue.json](https://github.com/user-attachments/files/18629369/vertopal.com_Light.Analogue.json)
+- [vertopal.com_Low.Power.Analog.json](https://github.com/user-attachments/files/18629370/vertopal.com_Low.Power.Analog.json)
+- [Analog.DX.KHz.json](https://github.com/user-attachments/files/18631299/Analog.DX.KHz.json)
+- [Analog.DX.MHz.json](https://github.com/user-attachments/files/18631300/Analog.DX.MHz.json)
+- [Analog.TV.KHz.json](https://github.com/user-attachments/files/18631301/Analog.TV.KHz.json)
+- [Analog.TV.MHz.json](https://github.com/user-attachments/files/18631302/Analog.TV.MHz.json)
+- [Betamax.Analog.VHS.json](https://github.com/user-attachments/files/18631303/Betamax.Analog.VHS.json)
+- [Betamax.Digital.V2.Remasterd.json](https://github.com/user-attachments/files/18631304/Betamax.Digital.V2.Remasterd.json)
+- [Betamax.Digital.json](https://github.com/user-attachments/files/18631305/Betamax.Digital.json)
+- [Betamax.VHS.json](https://github.com/user-attachments/files/18631306/Betamax.VHS.json)
+- [Digital.Recording.V2.json](https://github.com/user-attachments/files/18631307/Digital.Recording.V2.json)
+- [Digital.Recording.json](https://github.com/user-attachments/files/18631308/Digital.Recording.json)
+- [Digital.Teletext.V1.json](https://github.com/user-attachments/files/18631309/Digital.Teletext.V1.json)
+- [DVD.Recording.json](https://github.com/user-attachments/files/18631310/DVD.Recording.json)
+- [DVR.Recording.json](https://github.com/user-attachments/files/18631311/DVR.Recording.json)
+- [Low.Quality.Bandscan.DX.json](https://github.com/user-attachments/files/18631312/Low.Quality.Bandscan.DX.json)
+- [VHS.Clean.json](https://github.com/user-attachments/files/18631314/VHS.Clean.json)
+- [VHS.Original.json](https://github.com/user-attachments/files/18631315/VHS.Original.json)
+- [VHS.Physcial.Recording.json](https://github.com/user-attachments/files/18631316/VHS.Physcial.Recording.json)
+- [VHS.Socialist.or.Federative.TV.Recording.V2.json](https://github.com/user-attachments/files/18631317/VHS.Socialist.or.Federative.TV.Recording.V2.json)
+- [VHS.Socialist.or.Federative.TV.Recording.json](https://github.com/user-attachments/files/18631318/VHS.Socialist.or.Federative.TV.Recording.json)
+- [VHS.SoFTVR.V3.ft.Yugoslavia.json](https://github.com/user-attachments/files/18631319/VHS.SoFTVR.V3.ft.Yugoslavia.json)
+- [VHS.Teletext.json](https://github.com/user-attachments/files/18631320/VHS.Teletext.json)
+- [VHS.Television.Recording.V2.json](https://github.com/user-attachments/files/18631321/VHS.Television.Recording.V2.json)
+- [VHS.Television.Recording.V3.json](https://github.com/user-attachments/files/18631322/VHS.Television.Recording.V3.json)
+- [VHS.Television.Recording.V4.json](https://github.com/user-attachments/files/18631323/VHS.Television.Recording.V4.json)
+- [VHS.Television.Recording.json](https://github.com/user-attachments/files/18631324/VHS.Television.Recording.json)
+- [VHS.Warsaw.Pact.Recording.json](https://github.com/user-attachments/files/18631325/VHS.Warsaw.Pact.Recording.json)
+- [2000.s.Broadcast.json](https://github.com/user-attachments/files/18787305/2000.s.Broadcast.json)
+- [Alien.s.TV.Broadcast.json](https://github.com/user-attachments/files/18787306/Alien.s.TV.Broadcast.json)
+- [Did.X.Damaged.the.VHS.Tape.json](https://github.com/user-attachments/files/18787307/Did.X.Damaged.the.VHS.Tape.json)
+- [This.is.X.in.a.Alternate.Broadcast.Universe.json](https://github.com/user-attachments/files/18787308/This.is.X.in.a.Alternate.Broadcast.Universe.json)
+- [X.s.Broadcast.is.Funky.json](https://github.com/user-attachments/files/18787309/X.s.Broadcast.is.Funky.json)
+- [Made.By.AI.json](https://github.com/user-attachments/files/18815024/Made.By.AI.json)
+- [YellowCatball.ntsc-rs V0.20.zip](https://file.garden/ZlXTtl4XZwrMebNE/Presets/ntsc-rs/YellowCatball.ntsc-rs V0.20.zip)
+- [ntsc-rs_vhs-sp_v8.json](https://github.com/valadaptive/ntsc-rs/files/15058389/ntsc-rs_vhs-sp_v8.json) 
+
+</details>
 
 All those profiles can be used as a starting point for simulation.
 
@@ -278,17 +425,17 @@ Non-linear increasing values of type `percent` have a range between 0 and 1 and 
 
 | Filename | Description |
 | --- | --- |
-| [`svhs_basejson_empty.xlsx`]() | empty base `.json` sheet to use for statistical variation |
-| [`svhs_basejson_svhs-example.xlsx`]() | example profile sheet with pre-defined variation for [SVHS]() |
-| [`svhs_sim_helper.r`]() | contains all helper scripts |
-| [`svhs_sim_bash.r`]() | [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) call, suitable for `bash` under Linux, enable with `chmod +x svhs_sim_bash.r` |
-| [`svhs_sim_manual.r`]() | manual running the `R` script under various scenarios (see comments in the script), should be used for Windows |
+| [`svhs_basejson_empty.xlsx`](./svhs_basejson_empty.xlsx) | empty base `.json` sheet to use for statistical variation |
+| [`svhs_basejson_svhs-example.xlsx`](./svhs_basejson_svhs-example.xlsx) | example profile sheet with pre-defined variation for [SVHS]() |
+| [`svhs_sim_helper.r`](./svhs_sim_helper.r) | contains all helper scripts |
+| [`svhs_sim_bash.r`](./svhs_sim_bash.r) | [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) call, suitable for `bash` under Linux, enable with `chmod +x svhs_sim_bash.r` |
+| [`svhs_sim_manual.r`](./svhs_sim_manual.r) | manual running the `R` script under various scenarios (see comments in the script), should be used for Windows |
 
 
 ## `R` and its dependencies
 
-`R` on Linux is best installed from the `[r-project](https://cloud.r-project.org/bin/linux)` page. There are instructions for various  distributions.
-Under Linux packages are compiled and not downloaded as binaries. For that one needs a basic compilation environment and if `dev' packages are missing, the `R` package install routine usually give out error messages that contain helpful information which package is missing exactly. So installation is in most cases straightforward.
+`R` on Linux is best installed from the [`r-project`](https://cloud.r-project.org/bin/linux) page. There are instructions for various  distributions.
+Under Linux packages are compiled and not downloaded as binaries. For that one needs a basic compilation environment and if `dev` packages are missing, the `R` package install routine usually give out error messages that contain helpful information which package is missing exactly. So installation is in most cases straightforward.
 Normally under windows binaries are downloaded and installed from an `R` repo (mirror). Then no compilation is necessary.
 
 The script requires several `R` packages: `openxlsx`, `jsonlite`, `EnvStats`, `DescTools`, `prevalence`, and `argparse`. The best is to install them on the terminal by just running `R`. Do not use a GUI like `rstudio` because although as an IDE it is great, for installation of `R` packages it is buggy which means it often breaks with strange errors whereas `R` on the terminal does not break during install. Within `R` the packages can be installed along with their dependencies typing
@@ -335,19 +482,20 @@ NO WARRANTY of any kind is involved here. There is no guarantee that the softwar
 
 ## TODOs
 
+- add an open port for `R` code to insert one's own probability distributions.
 
 ## License
 
-- R script [GPL v3](https://www.gnu.org/licenses/gpl-3.0.html)
+- `R` script [GPL v3](https://www.gnu.org/licenses/gpl-3.0.html)
 - every other software cited has its own licence - see links below for details
 
 
 ## Cited software
 
-- [`ntsc-rs`](https://ntsc.rs)
-- [`R`](https://www.r-project.org)
-- [`rstudio`](https://posit.co/downloads)
-- [Debian Linux](https://www.debian.org)
+- [`ntsc-rs`](https://ntsc.rs) - vhs simulator written in Rust
+- [`R`](https://www.r-project.org) - the lingua franca of statistics with thousands of packages
+- [`rstudio`](https://posit.co/downloads) - an IDE for R
+- [Debian Linux](https://www.debian.org) - rock stable Linux distribution
 
 
 
@@ -417,3 +565,7 @@ NO WARRANTY of any kind is involved here. There is no guarantee that the softwar
 
 "-v", "--verbose", action="store_true", default=FALSE,
                     show more infos
+##########
+
+lynx -listonly -dump https://github.com/valadaptive/ntsc-rs/discussions/270|grep -E 'json|zip'| awk {'print $2 '}
+
