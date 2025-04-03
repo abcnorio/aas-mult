@@ -318,7 +318,7 @@ The following profiles can be found on the [github repo]() of `ntsc-rs`. The cre
 - [This.is.X.in.a.Alternate.Broadcast.Universe.json](https://github.com/user-attachments/files/18787308/This.is.X.in.a.Alternate.Broadcast.Universe.json)
 - [X.s.Broadcast.is.Funky.json](https://github.com/user-attachments/files/18787309/X.s.Broadcast.is.Funky.json)
 - [Made.By.AI.json](https://github.com/user-attachments/files/18815024/Made.By.AI.json)
-- ["YellowCatball.ntsc-rs V0.20.zip"]("https://file.garden/ZlXTtl4XZwrMebNE/Presets/ntsc-rs/YellowCatball.ntsc-rs V0.20.zip")
+- [YellowCatball.ntsc-rs V0.20.zip](https://file.garden/ZlXTtl4XZwrMebNE/Presets/ntsc-rs/YellowCatball.ntsc-rs%20V0.20.zip)
 - [ntsc-rs_vhs-sp_v8.json](https://github.com/valadaptive/ntsc-rs/files/15058389/ntsc-rs_vhs-sp_v8.json) 
 
 </details>
