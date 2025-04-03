@@ -164,7 +164,7 @@ The explanations of the options of the `R` script are:
 
 ## Artifact profiles and presets
 
-The following profiles can be found on the [github repo]() of `ntsc-rs`. The credit goes to the selected users who developed and kindly published it. The `R` script `svhs_sim_get-presets-bash.r` collects all `zip` and `json` files from the github discussion subsection [`presets`](https://github.com/valadaptive/ntsc-rs/discussions/categories/presets) of `ntsc-rs`. Those are [status quo 2025-04-03]:
+The following profiles can be found on the github repo of `ntsc-rs`, section [discussion](https://github.com/valadaptive/ntsc-rs/discussions) and sub-section [presets](https://github.com/valadaptive/ntsc-rs/discussions/categories/presets). The credit goes to the selected users who developed and kindly published it. The `R` script `svhs_sim_get-presets-bash.r` collects all `zip` and `json` files from the github discussion subsection [`presets`](https://github.com/valadaptive/ntsc-rs/discussions/categories/presets) of `ntsc-rs`. Those are [status quo 2025-04-03]:
 
 <details>
 
