@@ -155,6 +155,9 @@ options:
 
 </details>
 
+> [!IMPORTANT]
+> Be aware that the bash call requires to provide proper paths. E.g. if a video should be created from a video, the sourcefolder should contain video(s), otherwise it will fail. And the resulting error message may be cryptic, because the `R` script fails when this info is required. In short - the scripts do **not** provide every possible error check. It's up to the user to call the script properly.
+
 ## Options
 
 The explanations of the options of the `R` script are the same for the manual as well as the bash version (see comments in [aas_sim_manual.r](./aas_sim_manual.r) that covers various scenarios of everyday usage. Some options make only sense in combination with other parameters, see man page of `ntsc-rs-cli` and associated tutorials.
