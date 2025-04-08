@@ -79,7 +79,7 @@ parser$add_argument("-i", "--sourcefolder", type="character", default=sourcefold
                     help="relative path to source files [default: %(default)s]")
 
 parser$add_argument("-m", "--smaterial", type="character", default=smaterial, # video
-                    help="source material (images, videos) [default: %(default)s]")
+                    help="source material (image, video) [default: %(default)s]")
 
 parser$add_argument("-x", "--outfolder", type="character", default=outfolder,
                     help="relative path to output folder [default: %(default)s]")
@@ -177,6 +177,12 @@ archive
 #
 params.out
 
+
+if(smaterial == "video" && sourcefolder="image_source")
+{
+  cat("\nsourcefolder for video is normally not image_source ->\nchange it to video_source unless you change it.")
+  sourcefolder <- c("video_source")
+}
 # actual call
 
 # open control sheet for randomness

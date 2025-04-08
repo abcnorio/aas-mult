@@ -417,8 +417,8 @@ create.jsons <- function(basejson.sheet=NULL,
     }),collapse=","),"}",sep="")
     
     # write json to file
-    print(OUTjson.nam[i])
-    cat("\nwrite to file with WRITE = ",WRITE,sep="")
+    cat("\n",OUTjson.nam[i],sep="")
+    cat("\nWrite to file with WRITE = ",WRITE,sep="")
     if(WRITE == TRUE)
     {
       fex <- file.exists(OUTjson.nam[i])
@@ -438,6 +438,7 @@ create.jsons <- function(basejson.sheet=NULL,
     OUTjson
   })
 
+  cat("\nDone create jsons.\n")
 return(params.out.jsons)
 }
 #########
@@ -503,8 +504,8 @@ apply.ntscrs <- function(basejson.sheet=NULL,
                          singleframe=TRUE,
                          smaterial="image",
                          pathtontscrs="",
-                         sourcefolder="images",
-                         outfolder="ntsc-rs-OUT",
+                         sourcefolder="image_source",
+                         outfolder="aas_ntsc-rs-OUT",
                          OVERWRITE=TRUE,
                          fps=25,
                          encodingspeed=5,

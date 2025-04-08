@@ -1,5 +1,5 @@
 # URL
-# https://github.com/abcnorio/svhs-sim-mult
+# https://github.com/abcnorio/aas-sim-mult
 
 # (C) by abcnorio 2024-2025
 
@@ -7,16 +7,19 @@
 # GPL v3
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 
+# path?
+getwd()
+
 # get functions
-source("svhs_sim_helper.r")
+source("aas_sim_helper.r")
 
 ########################################
 
 # manual values
-pathtontscrs <- "/home/leo/library/DHAMMA/ntsc-rs/ntsc-rs/ntsc-rs/target/release/ntsc-rs-cli"
-basejson <- "/home/leo/library/DHAMMA/ntsc-rs/ntsc-rs/BASEjson_defaults_v3.xlsx"
-startfolder <- "/home/leo/library/DHAMMA/ntsc-rs"
-outfolder <- "TEST_ntsc-rs-OUT"
+pathtontscrs <- "/usr/local/bin/ntsc-rs-cli"
+basejson <- "example/aas_basejson_profile-nanda.xlsx"
+startfolder <- "./"
+outfolder <- "aas_ntsc-rs-OUT"
 sourcefolder <- "image_source"
 
 # add switch and choose between valid.endings unless given explicitly
@@ -27,9 +30,6 @@ singleframe <- TRUE
 
 smaterial <- "image"
 #smaterial <- "video"
-
-# combine target folder with *_smaterial
-targetfolder <- "/home/leo/library/DHAMMA/ntsc-rs/ntsc-rs-OUT"
 
 DO <- FALSE  #!dry
 OVERWRITE <- TRUE
@@ -146,7 +146,7 @@ apply.ntscrs(basejson.sheet=basejson.sheet,
              fullrandom=TRUE,
              other=other,
              archive=archive
-)
+             )
 
 # full random image
 # create each = 10 images
@@ -169,7 +169,7 @@ apply.ntscrs(basejson.sheet=basejson.sheet,
              fullrandom=TRUE,
              other=other,
              archive=archive
-)
+             )
 
 # video based on image
 apply.ntscrs(basejson.sheet=basejson.sheet,
