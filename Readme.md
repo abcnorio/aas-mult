@@ -1,4 +1,4 @@
-| | ![nanda](./nanda_initial.png) | |
+![nanda](./nanda_initial.png)
 
 
 # Analogue Artifacts Simulation (AAS) on multiple images/ videos using `ntsc-rs`
