@@ -1,6 +1,34 @@
-# (S)VHS simulation on a large number of images/ videos using ntsc-rs
+# Analogue Artifacts Simulation (AAS) on multiple images/ videos using `ntsc-rs`
 
 ## TOC
+
+- [Advance Organizer](#advance-organizer)
+- [Goal](#)
+- [Use cases](#)
+- [Overview](#)
+- [Implementation](#)
+- [Call](#)
+- [Options](#)
+- [Artifacts profiles and presets](#)
+- [Prerequisites of statistical work](#)
+- [Statistical variation and handling the spreadsheet ](#)
+- [Tweaking profiles via spreadsheet](#)
+	- [Statistical background (short)](#)
+		- [Categories (multiple, logical) ](#)
+		- [Linear increase (integer, float)](#)
+		- [Non-linear increase ](#)
+- [Files](#)
+- [Installation of `R` and its dependencies](#)
+	- ['ntsc-rs'](#)
+	- ['R'](#)
+	- ['R' packages](#)
+- [Usage and Procedure](#)
+- [Worked example ](#)
+- [Limitations](#)
+- [DISCLAIMER](#)
+- [TODOs](#)
+- [License](#)
+- [Cited software and addons](#)
 
 
 ## Advance Organizer
@@ -8,165 +36,103 @@
 
 ## Goal
 
-The `R` script provided allows to script [`ntsc-rs`](https://ntsc.rs) for an arbitrary number of iamges + videos based on a profile using the `.json` format of `ntsc-rs`. It introduces a certain amount of variation arranged by the user using a simple spreadsheet. In the spreadsheet the user can configure how the variation should take place for *every parameter* possibly by `ntsc-rs`.
+The `R` scripts hosted here allow to script [`ntsc-rs`](https://ntsc.rs) for an arbitrary number of images + videos based on a profile (preset) using the `.json` format of `ntsc-rs`. It introduces a certain amount of statistical variation arranged by the user using a simple spreadsheet. This ensures that each image (video) works with slightly different parameters within the tolerance space defined by the user. In the spreadsheet the user can configure how the variation should take place for *every parameter* possibly by `ntsc-rs`.
 
 
-## Use case
+## Use cases
 
-Simulating old analogue artifacts can be used for various purposes (images, videos):
+Simulating old analogue artifacts can be used for various purposes (image, video):
 
-- Fun
-- Art
-- Layout and professional graphics
-- Fine-tuning of AI/ML models (creation of a training sample based on hi-res material)
-	- upscale based on various model archs (e.g. [real-esrgan](https://github.com/xinntao/Real-ESRGAN)), suitable to be used with [neosr](https://github.com/neosr-project/neosr)
-	- remove old analogue/ (S)VHS)/ betacam, ... artifacts from images or videos without upscaling
+- fun
+- art
+- layout and professional graphics
+- fine-tuning of AI/ML models (creation of degradated material to match a training sample based on hi-res material)
+	- upscale fine-tuning can be done for various model archs (e.g. [real-esrgan](https://github.com/xinntao/Real-ESRGAN), ...), suitable to be applied by [neosr](https://github.com/neosr-project/neosr)
+	- remove old analogue TV/ (S)VHS)/ betacam, ... artifacts from images or videos without upscaling
 
-For AI/ML inference the [vsgan-tensorrt docker](https://github.com/styler00dollar/VSGAN-tensorrt-docker) engine is suitable. It uses docker and the installation is therefor pretty straightforward. It requires a huge GPU whereas `ntsc-rs-cli` works multithreaded with CPU.
+For AI/ML inference the [vsgan-tensorrt docker](https://github.com/styler00dollar/VSGAN-tensorrt-docker) engine is a good choice. It uses docker and the installation is therefor pretty straightforward. It requires a huge GPU whereas `ntsc-rs-cli` works multithreaded with CPU. For AI/ML preparation the script worked for more than 10k images without any failure or break.
 
 
 ## Overview
 
-The software [`ntsc-rs`](https://ntsc.rs) written in [`Rust`](https://www.rust-lang.org) allows users to tweak videos and images to simulate old analogue TV, (S)VHS, betacam, and other associated artifacts. As a consequence the outcome looks like an old VHS tape with all visible and known artifacts in dependence to the degree previously configured. This work is based on [composite-video-simulator](https://github.com/joncampbell123/composite-video-simulator) and [ntscqt](https://github.com/JargeZ/ntscqt) which contains a short outline of typical artifacts along with screenshots. Amongst those are(dot crawl, ringing, chroma/ luma delay error aka color bleeding, rainbow effects, chrominance noise, head switching noise, long/ extended play, luminance noise, oversaturation - to name only the most predominant artifacts. An extensive overview about video artficats can be found on the [AV artifact atlas](http://www.avartifactatlas.com/tags.html#video).
+The software [`ntsc-rs`](https://ntsc.rs) written in [`Rust`](https://www.rust-lang.org) allows users to simulate old analogue TV, (S)VHS, betacam, and other associated artifacts. Actually it should be named not as` ntsc*` but as **analog artifacts simulation**, because the artifacts e.g. by time degradation originally occur to PAL/ SECAM tapes as well as to NTSC tapes. And simulation pure analogue TV without any storage devices like video players can be done for PAL/ SECAM as well. The original work for `ntsc-rs` is the [composite video simulator](https://github.com/joncampbell123/composite-video-simulator).
 
-`ntsc-rs` has a GUI and a cli version. Configurations are stored in `.json` files. On the discussion forum of the github repo one can find profiles for certain historical environments like VHS, SVHS, betacam, analogue TV and much more - carefully selected and developed by users. Further down you can find a selection of published profiles. All can be used for simulation.
+As a consequence of carefully applying the artifact related parameters to the original footage the outcome looks like an old (S)VHS tape/ TV/ ... with all visible and known artifacts in dependence to the degree previously configured. This work based on [composite-video-simulator](https://github.com/joncampbell123/composite-video-simulator) and [ntscqt](https://github.com/JargeZ/ntscqt) contains more and more sources of signal degradation. A short outline of typical artifacts along with screenshots can be found on the repos. Amongst those the typical characteristics of dot crawl, ringing, chroma/ luma delay error aka color bleeding, rainbow effects, chrominance noise, head switching noise, long/ extended play, luminance noise, and oversaturation can be simulated - to name only the most predominant artifacts. An extensive overview about video artficats can be found on the [AV artifact atlas](http://www.avartifactatlas.com/tags.html#video). The ultimate goal is to simulate every of those video artifacts.
 
-So this setup allows to script the unattended generation of a large number of images or videos within a certain variation based on probabilities. The scripts were developed and tested under [Debian Linux](https://www.debian.org) (`bookworm`, 12.9).
+`ntsc-rs` works as GUI and now with a cli version. Configurations are stored in `.json` files, ie. simple text files. One can find on the discussion forum of the github repo of `ntsc-rs` a lot of profiles for certain historical environments like VHS, SVHS, betacam, analogue TV and much more - carefully selected and developed by users and uploaded by them. Further [down](XXXTODO) you can find a selection of published profiles. All of them can be used for simulation.
+
+Some of the profiles may not include all newest parameters of `ntsc-rs`. For such cases one has to carefulyl re-view with the GUI and concrete material those parameters not covered by the `.json` profile.
+
+This setup allows to script the unattended generation of a large (arbitrarry) number of images or videos within a certain variation based on probabilities (see [below for details](XXXTODO)). The scripts were developed and tested under [Debian Linux](https://www.debian.org) (`bookworm`, `12.9`) using ['R'](https://cran.r-project.org) version `4.4.2`.
 
 
 ## Implementation
 
-The `R` script is separated into
+The actual `R` functions to simulate and introduce statistical concepts are separated into
 
-- Creation of `.json` profile(s) based on statistics per image/ video by reading a base profile (spreadsheet, `.xlsx` format) which contains all statistical input
-- Call of `ntsc-rs-cli` along with its usual parameters (see `ntsc-rs-cli --help` for more)
+- creation of `.json` profile(s) based on statistics per image/ video by reading a base profile (spreadsheet, `.xlsx` format) which contains all statistical input for each parameter
+- call of `ntsc-rs-cli` along with its usual parameters (see `ntsc-rs-cli --help` for more)
 
-All options not covered by the `R` script call can be passthroughed via the '-g OPTIONS' or '--other OPTIONS' so `ntsc-rs-cli` can make use of them.
+All options not covered by the `R` script call can be passed through without any cross-checks by the script directly to `ntsc-rs-cli` via the '-g OPTIONS' or '--other OPTIONS' so  can make use of them. A user has to take care that those calls are proper.
 
 
 ## Call
 
-To call the `R` script via `Rscript` is straightforward with several options:
+To call the `R` script via [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) on the terminal is straightforward. The same can be achieved by using `R` directly and calling the functions (manually](TODOXXXinsertlink). The `Rscript` bash call has multiple options:
 
 <details>
 
-```bash
-$ ./svhs_sim_bash.r --help
-usage: ./svhs_sim_bash.r [-h] [-n NTSCRS]
-                              [-b BASEJSON]
-                              [-s STARTFOLDER]
-                              [-t TYPE]
-			      [-j]
-                              [-i SOURCEFOLDER]
-                              [-m SMATERIAL]
-                              [-x TARGETFOLDER]
-                              [-r TEMPFOLDER]
-                              [-d]
-                              [-o]
-                              [-u EACH]
-                              [-c COMPRESSIONLEVEL]
-                              [-q QUALITY]
-                              [-e ENCODINGSPEED]
-                              [-p BITDEPTH]
-                              [-f FPS]
-                              [-l LENGTH]
-                              [-a]
-                              [-z SEED]
-                              [-g OTHER]
-                              [-v]
+<summary>Click here to get an output of the possible parameters of `ass_bash_sim_bash.r`</summary>
 
-options:
-  -h, --help            show this help message and exit
-  -n NTSCRS, --ntscrs NTSCRS
-                        path to ntsc-rs-cli binary [default:
-                        /home/leo/library/DHAMMA/ntsc-rs/ntsc-rs/ntsc-
-                        rs/target/release/ntsc-rs-cli]
-  -b BASEJSON, --basejson BASEJSON
-                        basejson xlsx sheet [default:
-                        /home/leo/library/DHAMMA/ntsc-rs/ntsc-
-                        rs/BASEjson_defaults_v3.xlsx]
-  -s STARTFOLDER, --startfolder STARTFOLDER
-                        set start folder as a base [default:
-                        /home/leo/library/DHAMMA/ntsc-rs]
-  -t TYPE, --type TYPE  valid file endings (image: png, jpg, ... | video: mp4,
-                        mkv, ...) [default: ('jpg', 'JPG', 'TIF', 'tif',
-                        'BMP', 'bmp', 'PNG', 'png')]
-  -j, --single          create only single frame as png [default: True]
-  -i SOURCEFOLDER, --sourcefolder SOURCEFOLDER
-                        relative path to source files [default: Gji_photos]
-  -m SMATERIAL, --smaterial SMATERIAL
-                        source material (images, videos) [default: image]
-  -x TARGETFOLDER, --targetfolder TARGETFOLDER
-                        relative path to images [default:
-                        /home/leo/library/DHAMMA/ntsc-rs/ntsc-rs-OUT]
-  -r TEMPFOLDER, --tempfolder TEMPFOLDER
-                        temporary folder for intermediate videos (can be a
-                        ramdisk/ ramfs) [default: /tmp]
-  -d, --DRXRUN          do not process anything / dry-run [default: False]
-  -o, --overwriteNO     do not overwrite existent files [default: True]
-  -u EACH, --each EACH  image variations per image [default: 1]
-  -c COMPRESSIONLEVEL, --compressionlevel COMPRESSIONLEVEL
-                        compression level png (0=fast to 9=small) [default: 6]
-  -q QUALITY, --quality QUALITY
-                        video quality level h264 (max. 50) [default: 50]
-  -e ENCODINGSPEED, --encodingspeed ENCODINGSPEED
-                        encoding speed h264 (0-8) [default: 5]
-  -p BITDEPTH, --bitdepth BITDEPTH
-                        bit depth ffv1 codec h264 (8, 10, 12) [default: 8]
-  -f FPS, --fps FPS     frames per second for (intermediate) video (h264)
-                        [default: 25]
-  -l LENGTH, --length LENGTH
-                        length of intermediate video (h264) in HH:MM:SS.MS
-                        [default: 00:00:00.10]
-  -a, --archive         use ffvq archive codec [default: False]
-  -z SEED, --seed SEED  seed for randomness [default: 996677]
-  -g OTHER, --other OTHER
-                        options to passthrough to ntsc-rs-cli [default: ]
-  -v, --verbose         show more infos [default: False]
+```bash
+$ ./aas_sim_bash.r --help
 ```
 
 </details>
 
-The `R` script works with [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) so it can be called from the terminal.
-
 ## Options
 
-The explanations of the options of the `R` script are:
+The explanations of the options of the `R` script are the same for the manual as well as the bash version (see comments in [aas_sim_manual.r](./aas_sim_manual.r) that covers various scenarios of everyday usage. Some options make only sense in combination with other parameters, see man page of `ntsc-rs-cli` and associated tutorials.
 
 <details>
 
-| Switch | Description | Default value | Notes |
+<summary>Click here to see the commandline options of `ass_bash_sim_bash.r`</summary>
+
+| Switch | Description | Default value |
 | --- | --- | --- | --- |
-| `-n`, `--ntscrs` | path to `ntsc-rs-cli` | `~/ntsc-rs/ntsc-rs-cli`|
+| `-n`, `--ntscrs` | path to `ntsc-rs-cli` | `/usr/local/bin/ntsc-rs-cli`|
 | `-b`, `--basejson` | path to control sheet | `` |
 | `-s`, `--startfolder` | base folder of image(s) or video(s) | `` |
-| `-t`, `--type` | enabled file-endings for image/ video [image: jpg,JPG,tif,TIF,bmp,BMP,png,PNG , video: avi,AVI, mp4, MP4, mkv, MKV, vob, VOB | image file endings |
-| `-j`, `--singleframeNO` | create only single frame as png | TRUE |
-| `-i`, `--sourcefolder` | relative path to source files | `` |
-| `-m`, `--smaterial` | source material (video, image) | image |
-| `-x`, `--targetfolder` | relative path to output folder | `` |
-| `-d`, `--dry` | do a dry-run | FALSE |
-| `-o`, `--overwriteNO` | do not overwrite existent files | TRUE |
-| `-u`, `--each` | number of variations per image/ video | 1 |
-| `-c`, `--compressionlevel` | only png (0=fastest, 9=smallest) | 6 |
-| `-q`, `--quality` | h264 quality level (max. 50) | 50 |
-| `-e`, `--encodingspeed` | h264 encoding speed (0...8) | 5 |
-| `-p`, `--bitdepth` | ffv1 bit depth (8, 10, 12) | 8 |
-| `-f`, `--fps` | framerate | 25 |
-| `-l`, `--length` | duration in MM:SS.MS | 00:05.00 |
-| `-a`, `--archive` | use ffv1 archive codec | FALSE |
-| `-z`, `--seed` | seed for randomness | 996677 |
-| `-g`, `--other` | pass through further options to `ntsc-rs-cli` | |
-| `-v`, `--verbose` | put out more infos | FALSE |
+| `-t`, `--validendings` | enabled file-endings for image [image: jpg,JPG,tif,TIF,bmp,BMP,png,PNG] and video [avi,AVI, mp4, MP4, mkv, MKV, vob, VOB] |
+| `-j`, `--NOsingleframe` | create only single frame as png | `TRUE` |
+| `-i`, `--sourcefolder` | relative path to source files | `image_source` for image and `video_source` for video |
+| `-m`, `--smaterial` | source material (video, image) | `image` |
+| `-x`, `--outfolder` | relative path to output folder | `ntsc-rs-OUT` |
+| `-d`, `--dryrun` | do a dry-run | `FALSE` |
+| `-o`, `--NOoverwrite` | do not overwrite existent files | `TRUE` |
+| `-u`, `--each` | number of variations per image/ video | `1` |
+| `-c`, `--compressionlevel` | only png (0=fastest, 9=smallest) | `6` |
+| `-q`, `--quality` | h264 quality level (max. 50) | `50` |
+| `-e`, `--encodingspeed` | h264 encoding speed (0...8) | `5` |
+| `-p`, `--bitdepth` | ffv1 bit depth (8, 10, 12) | `8` |
+| `-f`, `--fps` | framerate | `25` |
+| `-l`, `--length` | duration in MM:SS.MS | `00:05.00` |
+| `-a`, `--archive` | use ffv1 archive codec | `FALSE` |
+| `-z`, `--seed` | seed for randomness | `996677` |
+| `-g`, `--other` | pass through further options to `ntsc-rs-cli` | `` |
+| `-v`, `--verbose` | put out more infos | `FALSE` |
+| `-y`, `--fullrandom` | create a full random profile/ preset | `FALSE` |
 
 </details>
 
 
 ## Artifact profiles and presets
 
-The following profiles can be found on the github repo of `ntsc-rs`, section [discussion](https://github.com/valadaptive/ntsc-rs/discussions) and sub-section [presets](https://github.com/valadaptive/ntsc-rs/discussions/categories/presets). The credit goes to the selected users who developed and kindly published it. The `R` script `svhs_sim_get-presets-bash.r` collects all `zip` and `json` files from the github discussion subsection [`presets`](https://github.com/valadaptive/ntsc-rs/discussions/categories/presets) of `ntsc-rs`. Those are [status quo 2025-04-03]:
+The following profiles can be found on the github repo of `ntsc-rs`, section [discussion](https://github.com/valadaptive/ntsc-rs/discussions) and sub-section [presets](https://github.com/valadaptive/ntsc-rs/discussions/categories/presets). The credit goes to the selected users who developed and kindly published it. The `R` script [`svhs_sim_get-presets-bash.r`](./svhs_sim_get-presets-bash.r) collects all `zip` and `json` files from the github discussion sub-section [`presets`](https://github.com/valadaptive/ntsc-rs/discussions/categories/presets) of `ntsc-rs` and downloads them locally (see `aas_sim_get-presets-bash.r --help` for further options). Those are [status quo 2025-04-03]:
 
 <details>
+
+<summaryClick here to get a list with download links of `ntsc-rs` profiles.</summary>
 
 - [80s-commercial.json](https://github.com/valadaptive/ntsc-rs/files/15410576/80s-commercial.json)
 - [hs-u780-2.json](https://github.com/valadaptive/ntsc-rs/files/15443941/hs-u780-2.json)
@@ -323,33 +289,72 @@ The following profiles can be found on the github repo of `ntsc-rs`, section [di
 
 </details>
 
-All those profiles can be used as a starting point for simulation.
+All those profiles can be used as a starting point for simulation. Best is to use the GUI to see their actual effect on an image (video) before applying it to an arbitrary number of files. It also requires to find out the tolerance space to maintain the profile but allowing for statistical variance. This requires visual inspection.
 
 
-## Statistics and handling the spreadsheet
+## Prerequisites of statistical work
 
-The number of possibilities `ntsc-rs` offers is huge:
+Some concepts have to be understood before being able to apply them on the spreadsheet (see next paragraph). The essential bare minimum collection of statistical concepts consists of
 
-``
+- probability (esp. the Bayesian interpretation in contrast to classical statistics in the tradition of Fisher and Neyman-Pearson)
+- randomness
+- qualitative vs. quantitative or categories vs. integer/ numeric values and possible operations
+- possibility space
+- probability distributions (uniform, normal, beta, ...)
+- characteristics of a probability distribution
+	- mode, median, mean
+	- standard deviation and variance
+	- asymmetry/ symmetry of a distribution
+	- truncation
+- random draw from a sample (sampling)
 
+It is not essential to understand algorithms, formula, etc. although it is no doubt always very helpful to understand math. However, it is far more necessary to understand the underlying concepts and why we need it or not. We do not refer to any statistical teaching books here, but the book written 2006 by [O'Hagan, Buck, Daneshkhah, Eiser, Garthwaite, Jenkinson, Oakley, and Rakow](https://onlinelibrary.wiley.com/doi/book/10.1002/0470033312) called **Uncertain Judgements: Eliciting Experts' Probabilities** on the creation of Bayesian prior distributions with experts but non-statisticians is a good starting point to be able to tweak the sheet properly. Some other concepts (like characteristics of a distribution) can be looked up on the net. Beneficial is always to have a look on graphical output, because graphs can describe and explain ideas and implementations often in a more clear and definite way than pure numbers or formula are capable of. They are many times very intuitive and accessible by people not skilled in math. That's sufficient for our purpose here.
+
+## Statistical variation and handling of the spreadsheet
+
+The total number of possibilities to tweak `ntsc-rs` is huge:
+
+```RXXXTODOcheck
+> length(samp.list) # number of parameters
+[1] 63
+> prod(sapply(samp.list,length)) # total numer of options
+[1] 1.927772e+90 ###TODO CHANGE
+```
+
+That's a substantial number of different possibilities **per image/ video**.
 The following screenshot shows the sheet for the profile SVHS.
 
 <details>
+
+<summary>Click here to show the screenshot of `ntsc-rs` parameters.</summary>
 
 ![sheet example](./basejsonsheet.png)
 
 </details>
 
-The options to tweak the profile via sheet are below. For the statistical part there are different cases:
+The basic strategy to introduce statistical variation is:
 
-- logical (uniform distribution)
-- linear (normal truncated distribution)
-- nonlinear (beta distribution)
-- random seed (random value)
+- open up the possibility space for each parameter
+- put one's own probability distribution over it
+- draw samples from the probability distribution to get a sample from the parameter space
 
-The configuration names match the GUI version of `ntsc-rs`. Each `X` in the first colum marks whether the value can be changed to tweak the profile.
+The options to tweak the profile/ presets via sheet are below. For the statistical part there are different cases that should be handled separately. Each type requires a different statistical way to introduce randomness. The probability distribution shows the initial distribution of each type. The column notes offers information how to change it. All parameters require to set some anchor point which therefor is not mentioned in the notes column repeatedly. Details of the calculation can be found in the script itself.
+
+| Type | Prob. distribution | Parameter space | Notes |
+| --- | --- | --- | --- |
+| logical | uniform | TRUE/ FALSE | weights |
+| categorical | uniform | qualitative categories | weights |
+| linear | normal truncated | integer values | standard deviation |
+| linear | uniform | integer values | equal p=1/lenght(x) |
+| linear | normal truncated | numeric values with digits | standard deviation |
+| non-linear | beta | numeric values with digits | lower + upper limit |
+| random  | - | just random value | starting point for algorithms |
+
+The configuration names match the GUI version of `ntsc-rs` and how they are stored in its `.json` config file. Each `X` in the first column of the table below marks whether the value can be changed to tweak the profile. Additionally, the sheet itself contains a column `CH` that allows to enable/ disable changes to that parameter. If a parameter is marked as unchangeable, it as well as its (possible) sub-categories won't be changed statistically by the script regardless the parameters chosen. So it allows an easy way to disable changes to maintain certain profile characteristics, because a profile may require to never change a specific parameter.
 
 <details>
+
+<summary>Click here to show the table summary of the spreadsheet (columns).</summary>
 
 | Tweak | Column | Description | Explanation | Notes |
 | --- | --- | --- | --- | --- |
@@ -377,44 +382,415 @@ The configuration names match the GUI version of `ntsc-rs`. Each `X` in the firs
 
 </details>
 
+## Excourse on "putting a probability distribution on possibility space"
+
+As a small excourse we have to understand what we do when we want to draw random samples with specific probabilities (weights). Let's start with an example from the qualitative case ie. categories.
+
+### Qualitative case - draw random samples from categories
+
+As an example we begin with the category `vhs_tape_speed` which has four categorical elements: `SP`, `LP`, `EP`, and `none`. We cannot say one value is greater (smaller) than the other. We could compare the playing speed quantitatively, but only for the first but not for the last element. Thus, we cannot do calculations with them, only compare them with each other, and conclude "better", "worse", "equal", etc. For our goal - a profile - we want to emphasize the elements `SP` and `LP` over `EP` and `none`. This does not mean to exclude any category - which would be possible. We certainly want to ensure that the latter categories appear only very seldom in contrast to the other ones.
+
+This requires to put different weights on the categories which act as an anchor for their statistical appearance. Those weights are chosen in accordance to our subjective understanding of the profile that we have in mind. Those weights are not given by nature, we just choose them and may change them if the outcomes does not suit us.
+
+| Category | Weight | Probability | 
+| --- | --- | --- |
+| `SP` | 10 | 0,435 |
+| `LP` | 10 | 0.435 |
+| `EP` | 2 | 0.087 |
+| `none` | 1 | 0.043 |
+
+If all weights would be the same (e.g. `1|1|1|1`), then the probability for each category to be drawn randomly is exactly the same. However, that is not intended here. Equality is no choice. Elements should appear in accordance to our pre-defined weights. In this case there is a ratio of (10+10):(2+1) ie. 20:3 for the first two categories (combined) vs. the other two categories (combined). We look more closely on the situation using some `R` code.
+
+First we set a seed which acts as a starting point for random algorithms, It ensures that if the same seed is chosen that the same values result by the random algorithm. This allows to repeat randomness.
+
+```R
+# set seed
+set.seed(667799)
+```
+
+First, the vector with the four elements is created and a uniform distribution (ie. equal weights), and the vector with weights as outlined above.
+
+```R
+# create qualitative vector
+vhs.tape.speed <- c("SP","LP","EP","none")
+
+# create uniform probability vector
+uniform <- c(1,1,1,1)
+
+# create weights according to the intended profile
+vhs.tape.speed.weights <- c(10,10,2,1)
+```
+
+Weights can be converted to probabilities.
+
+```R
+# convert to probabilities
+vhs.tape.speed.probs <- vhs.tape.speed.weights/(sum(vhs.tape.speed.weights))
+```
+
+To be sure we check whether all values really sum up to one so that we can talk of probabilities.
+
+```R output
+> sum(vhs.tape.speed.probs)
+[1] 1
+```
+
+At first, we draw some single random samples with `size=1` with uniform sampling, ie. each value has the same probability.
+
+```R output
+> # uniform sampling
+> # single case
+> sample(vhs.tape.speed, size=1, replace=TRUE)
+[1] "none"
+> sample(vhs.tape.speed, size=1, replace=TRUE)
+[1] "EP"
+```
+
+We can see it can happen that our first value is not from the dominant two categories. Therefor - to understand statistics - the intended ratios work on larger samples. We have to keep that in mind. Single cases can always look like an exception although they are not on the long run with large samples.
+
+If we would repeat the sampling many times the number of appearances between the four elements should roughly match. With growing sample size the number of appearances approach more and more identity with the pre-defined weights which are uniform at the moment, because we chose a uniform distribution. Here it goes:
+
+```R
+# multiple cases, ie. repeated sampling with replacement
+# size = 1e5
+vhs.tape.speed.samp.unif1 <- sample(vhs.tape.speed, size=1e5, replace=TRUE)
+```
+
+```R output
+> table(vhs.tape.speed.samp.unif1)
+vhs.tape.speed.samp.unif1
+   EP    LP  none    SP 
+25213 24871 24946 24970 
+
+We can see the numbers do not match exactly, but are quite close to each other. We do some rounding to get things more clearly.
+
+> # rounding
+> round( table(vhs.tape.speed.samp.unif1)/1e4, 0)
+vhs.tape.speed.samp.unif1
+  EP   LP none   SP 
+   3    2    2    2 
+> round( table(vhs.tape.speed.samp.unif1)/1e4, 1)
+vhs.tape.speed.samp.unif1
+  EP   LP none   SP 
+ 2.5  2.5  2.5  2.5 
+```
+
+So one digit after the comma the values are already identical as they should be. We could repeat that with even larger sample sizes. Then the numbers will approach each other more and more. Latest with infinite sample size the value will match exactly.
+
+```R output
+> table(sample(vhs.tape.speed, size=10e6, replace=TRUE))
+
+     EP      LP    none      SP 
+2498462 2501360 2499562 2500616 
+```
+
+But that's not what we really want. Therefor we shift towards weighted sampling. The procedure remains the same, only instead of the uniform distribution our earlier pre-defined weights will be used.
+
+```R
+# weighted sampling       
+# size = 1e5
+vhs.tape.speed.samp.probs1 <- sample(vhs.tape.speed, size=1e5, replace=TRUE, prob=vhs.tape.speed.probs)
+tab1 <- table(vhs.tape.speed.samp.probs1)
+```
+
+First we check the ratio of appearances of the two dominant elements `LP` and `SP` vs. `EP`.
+
+```R output
+> # ratio to check for pre-defined weights
+> tab1[c(2,4)] / tab1[c(1)]
+vhs.tape.speed.samp.probs1
+      LP       SP 
+5.024986 4.993322 
+```
+
+And then against `none`
+
+```R output
+> tab1[c(2,4)] / tab1[c(3)]
+vhs.tape.speed.samp.probs1
+      LP       SP 
+10.13516 10.07130 
+```
+
+Compared with the pre-defined weights this fits quite well. We repeat it with a larger sample size of `1e6` ie. 10^5.
+
+```R
+vhs.tape.speed.samp.probs2 <- sample(vhs.tape.speed, size=1e6, replace=TRUE, prob=vhs.tape.speed.probs)
+tab2 <- table(vhs.tape.speed.samp.probs2)
+```
+
+Now repeat the last ratio check:
+
+```R output
+> tab2[c(2,4)] / tab2[c(1)]
+vhs.tape.speed.samp.probs2
+      LP       SP 
+4.970437 4.960690 
+> tab2[c(2,4)] / tab2[c(3)]
+vhs.tape.speed.samp.probs2
+      LP       SP 
+10.01561  9.99597 
+```
+
+As can be seen that ratios vary around the ideal values and this goes on for a very long time even with growing sample sizes. However, we can be sure our approach works, so if we draw a single random value we know it is from a sample with proper ratios. That's all we need. The rest is left to statistics and its variations.
+
+Now we can proceed to the quantitative case which is not really different. The procedure actually stays the same.
+
+
+### Quantitative case - draw random samples from numeric spaces
+
+In contrast to the qualitative case here our values are of type integer or numeric which means we can say "value A is greater (smaller) than value B" and we can perform calculations with them. However, the basic procedure mirrors the qualitative case. First, a seed is defined.
+
+```R
+# set seed
+set.seed(667799)
+```
+
+The creation of the vector follows below. In our case we chose to use the parameter `chroma_delay_vertical` which contains values between -20 and +20, because it is defined that way. For sampling two vectors are created, one that contains only the values of the parameter and one that creates more values within the same range of possible values (-20,+20) which is done here just to demonstrate numeric vs. integer values for educational purpose. `chroma_delay_vertical` is defined as an integer which means we have no digits after the comma as valid manifestations of the parameter. Only values -20, -19, ... up to +20 are valid. If the vector would not be integer but numeric (floating point), in theory there would be an infinite number of values between -20 ... + 20. However, for practical purposes we need only a fraction of infinity to attain our goals and to model certain relationships. For the various parameters of `ntsc-rs` one can have a look at the spreadsheet which contains the number of digits after the comma for each parameter and how it is defined (min, max). With that information one can create a vector that contains the complete possibility space that mirrors the one used by `ntsc-rs`. As an example `chroma_delay_horizontal` contains values between -40 and +40 with one digit after the comma. This would result in 801 values. For `chroma_delay_vertical` the possibility space contains 41 values.
+
+```R
+# create vector with all valid values of 'chroma_delay_vertical'
+chroma_delay_vertical <- seq(-20,20)
+# create numeric vector (just for educational purposes)
+sek <- seq(-20,20, length.out=1e4)
+```
+
+Be aware that a sequence of -20 to 20 includes more than 40 values due to zero included
+
+```R output
+> length(chroma_delay_vertical)
+[1] 41
+```
+
+whereas the other vector contains a pre-defined number of values
+```R output
+> length(sek)
+[1] 10000
+```
+
+Now we can plot values with varying mean and standard deviations. The `R` function `dnorm` allows for that. The first three plots contain plots based on numeric values (normal distribution with different characteristics) and the last plot contains the empirical parameter `chroma_delay_vertical` if a standard normal distribution with `mean=0` and `sd=1` is assumed. The focus lies obviously on the zero and the variation is rather small.
+
+```R
+# using normal distribution
+
+par(mfrow=c(2,2))
+# normal distribution with mean=0, sd=1
+plot(sek, dnorm(sek), type="l", col="darkred")
+# normal distribution with mean=-10, sd=1
+plot(sek, dnorm(sek, mean=-10, sd=1), type="l", col="darkred")
+# normal distribution with mean=-10, sd=5
+plot(sek, dnorm(sek, mean=-10, sd=5), type="l", col="darkred")
+# empirical case 'chroma_delay_vertical'
+plot(chroma_delay_vertical, dnorm(chroma_delay_vertical), type="l", col="darkred")
+```
+
+> [!IMPORTANT]
+> This gives a rough impression that the focus (or mass of the distribution) can be distributed either on specific values and in a wider or more narrow range (which is called variance `var`, the square of the standard deviation `sd`). The task to create a statistical variation of a profile includes therefor that a user has to think carefully about each parameter and how to define it.
+
+This requires answers to the following questions:
+
+- Where to put the focus on and to create an **anchor point**
+- How narrow/ wide a distribution should be to enable (how much?) **statistical variation**
+- Whether to exclude values from the possibility (parameter) space or not to create a **restricted possibility space**
+
+> [!IMPORTANT]
+> Such questions cannot be answered by numbers but only by playing with the `ntsc-rs` GUI on real material up to the point that it fits.
+
+Something different - to ensure that later plots are printed separately and not on the 2x2 grid defined above with `par()`, it requires to remove the screen. Future plots will open up a new screen with a default 1x1 grid.
+
+```R
+dev.off()
+```
+
+![normal distribution with different sample size and characteristics](./plots/plot_dnorms.png)
+
+We chose (arbitrarily) that our interest is a normal distribution with a mean of -10 and a standard deviation of 5. On an empirical level - see above - the user will work with the GUI to find out actual working values of a parameter that make sense. The exemplary probability distribution is defined as follows and looks like:
+
+```R
+probs1 <- dnorm(chroma_delay_vertical, mean=-10, sd=5)
+plot(chroma_delay_vertical,probs1, type="l", col="darkred")
+```
+
+![chroma delay vertical normal distribution with mean=-10 and sd=5](.plots/cdv_mean-minus10_sd5.png)
+
+Now we can sample from the `chroma_delay_vertical` sample space (defined between -20,+20) based on the normal distribution with mean=-10 and sd=5. Sampling single cases ios unpredictable:
+
+```R output
+> # single case
+> sample(chroma_delay_vertical, size=1, replace=TRUE, prob=probs1)
+[1] -10
+> sample(chroma_delay_vertical, size=1, replace=TRUE, prob=probs1)
+[1] -5
+```
+
+Those single cases say nothing to get the general picture. As explained above, we have to go back to larger sample sizes to approach the pre-defined distribution.
+
+```R
+# multiple values
+cdv.samp1 <- sample(chroma_delay_vertical, size=1e6, replace=TRUE, prob=probs1)
+```
+
+We just have a look at the head and tail of the drawn samples because of the huge sample size of `1e6`.
+
+```R output
+> head(cdv.samp1)
+[1]  -6 -13 -19  -5  -4 -12
+> tail(cdv.samp1)
+[1]  -1 -14 -17 -15   1  -4
+```
+
+Better is to summarize the samples using usual characteristics.
+
+```R output
+> summary(cdv.samp1)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-20.000 -13.000 -10.000  -9.771  -7.000  14.000 
+> sd(cdv.samp1)
+[1] 4.762879
+```
+
+This looks already quite well. We have to remember that our ideal values of mean=-10 and sd=5 are not approached immediately, but certainly with infinite sample sizes even if that sounds like crazy big (which it is). It just means in practice the numbers slowly approach ideal values, but it takes time. For single cases it means we can be confident to draw from the right distribution. Nevertheless we can count each value how many times it appears to create a table. And of course one can and should always plot the data.
+
+```R
+tab.cdv <- table(cdv.samp1)
+no.zeros <- 20-(max(as.integer(names(tab.cdv))))
+tab.cdv <- c(tab.cdv,rep(0,no.zeros))
+plot(chroma_delay_vertical,tab.cdv, type="l", col="darkred")
+```
+
+![chroma delay vertical normal distribution (mean=-10, sd=5) with excluded areas](./plots/cdv_mean-minus10_sd5_with-zeros.png)
+
+To understand the plot better, we have a look at the table of each possible value of `chroma_delay_vertical`.
+
+```R output
+> table(cdv.samp1)
+cdv.samp1
+  -20   -19   -18   -17   -16   -15   -14   -13   -12   -11   -10    -9    -8    -7    -6    -5 
+10957 16031 22659 30700 39503 49406 58768 67984 74682 79327 81074 79416 75059 67918 58713 49124 
+   -4    -3    -2    -1     0     1     2     3     4     5     6     7     8     9    10    11 
+39792 30645 22766 16274 10885  7286  4662  2832  1608   942   492   249   127    57    33    17 
+   12    13    14 
+    8     3     1 
+```
+
+Looking closely on the numbers it becomes obvious that values above 14 do not exist anymore. Why? Because we moved the normal distribution to the left so that the probability to draw values above 15, 14, 13, ... becomes less and less and approaches on a practical level zero. Those values are unlikely or even very very unlikely, but for very large sample sizes they can happen. To demonstrate that let's increase the sample size further to `1e7`. The table looks like now:
+
+```R output
+> table(sample(chroma_delay_vertical, size=1e7, replace=TRUE, prob=probs1))
+
+   -20    -19    -18    -17    -16    -15    -14    -13    -12    -11    -10     -9     -8     -7 
+110152 160002 226558 305174 395076 492712 589331 678659 748991 795943 812019 796773 748287 677542 
+    -6     -5     -4     -3     -2     -1      0      1      2      3      4      5      6      7 
+590707 492873 396130 305643 226281 160607 109966  72240  45743  27651  16169   8878   4966   2534 
+     8      9     10     11     12     13     14     15     16     17 
+  1320    582    280    121     50     22      9      4      4      1 
+```
+
+The table covers now 15, 16, and 17 but not yet 18, 19, and 20. For that it would require even larger sample sizes. However, there are cases where we really want to exclude values by choice and not by low probability. Then, the normal distribution can be replaced by a normal truncated distribution. This is just a normal distribution that stops at pre-defined values. Just out of curiosity we will exclude values below -17 and above 6 for the example discussed above. Those limits are arbitrary but should be determined wisely for real empirical cases. Excluding values just means that such values won't appear regardless the sample size. Even with infinite sample sizes the values won't appear.
+
+The `R` package `EnvStats` contains the truncated normal distribution.
+
+```R
+library(EnvStats)
+cdv.normtrunc <- dnormTrunc(chroma_delay_vertical, mean=-10, sd=5, min=-17, max=6)
+names(cdv.normtrunc) <- seq(-20,20)
+```
+
+```R output
+> round(cdv.normtrunc,3)
+  -20   -19   -18   -17   -16   -15   -14   -13   -12   -11   -10    -9    -8    -7    -6    -5 
+0.000 0.000 0.000 0.033 0.042 0.053 0.063 0.073 0.080 0.085 0.087 0.085 0.080 0.073 0.063 0.053 
+   -4    -3    -2    -1     0     1     2     3     4     5     6     7     8     9    10    11 
+0.042 0.033 0.024 0.017 0.012 0.008 0.005 0.003 0.002 0.001 0.001 0.000 0.000 0.000 0.000 0.000 
+   12    13    14    15    16    17    18    19    20 
+0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 
+```
+
+We could increase the sample size to infinity and the values which are zero won't appear a single time. This is pretty nice for our purposes here. This can be plotted and will look different from the previous plot that covered a wider possibility space.
+
+```R
+zeros <- names(cdv.normtrunc)[which(cdv.normtrunc == 0)]
+zeros.int <- as.integer(zeros)
+plot.area <- seq(-20,20)[! seq(-20,20) %in% zeros.int]
+plot(plot.area,cdv.normtrunc[cdv.normtrunc != 0], type="l", col="darkred", xlim=c(-20,20))
+```
+
+![chroma delay vertical truncated normal distribution (mean=-10, sd=5)](.plots/cdv_mean-minus10_sd5_truncated.png)
+
+How does it look? Exactly - like a truncated normal distribution and that's exactly what it is.
+
+> [!IMPORTANT]
+> This structural thinking can be applied to every other distribution that may be interesting for analog artifacts simulation. We won't cover the case of the beta or any other interesting distribution. We also do not claim that our choices are the best or given by nature. All what we do is to **model processes**, nothing else. **A model is not and will never be truth**. It's just a model. Thus, in theory if someone is not happy or disagrees with the proposed distributions to draw random samples, every imaginable distribution can be taken and applied as a probability distribution to draw random samples from the pre-defined sample spaces of each parameter. The code structures outlined above won't change in general. The spreadsheet allows to change the way to create random values.
+
 ## Tweaking profiles via spreadsheet
 
-Relevant columns for the profile allow to change the statistical appearance of each of `ntsc-rs` configs. The following describes details as they appear in everyday work:
+Selected columns of the profile allow to change the statistical appearance of each of `ntsc-rs` configs. The subsequent outline describes details as they appear in everyday work:
 
+- `default` - this column contains the default values from `ntsc-rs` and should not be changed. It acts solely as a reference.
 - `namePR` - just give your profile a name. This is only for your reference if you store more than one profile.
-- `anchorPR` - put in the original values of your initial profile. This acts as an anchor for everything that comes afterwards. This column is used for every category (ie. row).
-- `probcalc` - the `R` script is fixed at the moment to use one of those distribution functions. In theory one can put in every possible probability distribution to calculate statistical variance. This requires changes in the script.
+- `anchorPR` - put in the original values of your initial profile. This acts as an anchor for everything that comes afterwards ie. the statistical variations. This column is used for every category (ie. row).
+- `probcalc` - the `R` script is fixed at the moment to use one of those distribution functions. In theory one can put in every possible probability distribution to calculate statistical variance. This requires changes in the script itself.
 
 We deal now in accordance with the type of variable.
 
-Important is to understand the values in column `subref.lfd`. A value in this column refers to the value in column 'lfd` which means if for this main category the value in column `CH` is set to `FALSE`, then all those values associated with it cannot be changed. That's just a hierarchical system (see GUI). If the value is set to `TRUE`, all chances below that category are taken into account for statistical variation, otherwise not.
+Important is to understand the values in column `subref.lfd`. A value in this column refers to the value in column 'lfd'. A value in column 'lfd' points towards a higher-level category which means if a higher-level category is set to unchangeable (see column `CH` with T/F values), then all lower-level categories are set to unchangeable as well - and v.v. If a higher-level category can be changed, the value in column 'CH' of the associated lower-level categories determines their changeability. That's just a simple hierarchical system (see GUI).
 
 ### Statistical background (short)
 
 The idea is simple - the script works for each category by drawing a value from a probability space based on a random draw from a chosen probability distribution:
 
-- analyis of `ntsc-rs` and its possible values
-- create a complete probability space of all possible values
-- put one's own probability distribution over the probability space and draw a random value from that (per category)
+- analyis of `ntsc-rs` and its possible values to determine the possibility space for each parameter
+- using those infos to create a complete probability space for each parameter
+- put one's own probability distribution over the probability space and draw a random value from that (per parameter)
+- create the `.json` file and use it to apply `ntsc-rs`
 
-It is possible to use other probability distributions than the ones mentioned here. This requires some changes in the script that every R user with enough knowledge can do. Or one could add a general function to passthrough `R` code directly.
+It is possible to use other probability distributions than the ones mentioned here. This requires some changes in the script that every `R` user with enough knowledge can do. Or one could add a general function to passthrough `R` code directly. For each type of a parameter other columns of the sheet are required to change. Only those will be used for the actual statistical considerations.
 
 #### Categories (multiple, logical)
 
-Categories can be either `multiple` (categories) or `logical` (two values possible). The handling is identical.
+Categories can be either `logical` (two values possible) or `multiple` (categories). The handling is identical.
 
 - `probs` - this puts weight on the possible values. Weights are re-calculated as probabilities by the script that sum up to 1.
+
+Example: The weights will be inserted into the respective cells with a `|` as delimiter like
+
+`1|3|2|5'
+
+In the example above we have four categories with weights 1,3,2 and 5 - ie. integer values. The weights will internally be re-calculated to probabilities
+
+```R output
+> w <- c(1,3,2,5)
+> w/(sum(w))
+[1] 0.09090909 0.27272727 0.18181818 0.45454545
+> sum(w/(sum(w)))
+[1] 1
+```
+
+Equivalent one can give weights to the parameter values of a category. The column `categories` of the sheet contains for such cases the original terms of `ntsc-rs` so one knows exactly where to put weights on or not. If an equal distribution of values is chosen, every category gets the same value. That way one can give weights in accordance to subjective understanding.
+
+```R output
+> p1 <- c(2,2,2,2)
+> p2 <- c(7,7,7,7)
+> p1/sum(p1)
+[1] 0.25 0.25 0.25 0.25
+> p2/sum(p2)
+[1] 0.25 0.25 0.25 0.25
+```
+
+As can be seen above the integer values are not relevant as long as they are all the same to create an equal distribution with identical probabilities. Relevant is the relative impact (weight) between the categories, not the overall total number - which will be re-calculated to a probability anyway which always lies between 0 and 1.
+
+Categories are qualitative in their nature. Now we will have a look at the other distributions that are in contrast quantitative.
 
 #### Linear increase (integer, float)
 
 Linear increasing values of type `integer` or `float` use the distribution outline in the column `probcalc` which is a truncated normal distribution. This allows - as the name says - to truncate the normal distribution which fits the needs here perfectly well.
 
 - `SD` - standard deviation of the truncated normal distribution
-- `SD` - if `EQUAL` is set and column `probcalc` contains `uniform`, a uniform distribution is applied. Then all values have the same probability 1/length(prob space).
+- `SD` - if `EQUAL` is set and column `probcalc` contains `uniform`, a uniform distribution is applied. Then all values have the same probability 1/length(prob space). This makes only sense for integer values.
 
 #### Non-linear increase
 
-Non-linear increasing values of type `percent` have a range between 0 and 1 and can be handled like probabilities. Their nature is non-linear and one has to use the GUI practically to understand the non-linear nature and its visual impact on the output. To introduce statistical variation a [beta](https://en.wikipedia.org/wiki/Beta_distribution) distribution offers a range of variation that fits, mostly because it is very flexible in the way it [looks](https://en.wikipedia.org/wiki/Beta_distribution#/media/File:PDF_of_the_Beta_distribution.gif) and it is easy to create the parameters of a beta distribution by getting some values.
+Non-linear increasing values of type `percent` have a range between 0 and 1 and can be handled like probabilities or percentages. Their nature is non-linear and one has to use the GUI practically to understand the non-linear (log-like) nature and its visual impact on the output. To introduce statistical variation a [beta](https://en.wikipedia.org/wiki/Beta_distribution) distribution offers a range of variations that fit well. The beta distribution is very flexible in the way it [looks](https://en.wikipedia.org/wiki/Beta_distribution#/media/File:PDF_of_the_Beta_distribution.gif) and it is easy to create the parameters of a beta distribution from some values.
 
 - `LOW` - choose a lower bound
 - `UP` - choose an uppper bound
@@ -423,22 +799,60 @@ Non-linear increasing values of type `percent` have a range between 0 and 1 and 
 
 ## Files
 
+The repo contains the following files relevant to run the scripts.
+
 | Filename | Description |
 | --- | --- |
-| [`svhs_basejson_empty.xlsx`](./svhs_basejson_empty.xlsx) | empty base `.json` sheet to use for statistical variation |
-| [`svhs_basejson_svhs-example.xlsx`](./svhs_basejson_svhs-example.xlsx) | example profile sheet with pre-defined variation for [SVHS]() |
-| [`svhs_sim_helper.r`](./svhs_sim_helper.r) | contains all helper scripts |
-| [`svhs_sim_bash.r`](./svhs_sim_bash.r) | [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) call, suitable for `bash` under Linux, enable with `chmod +x svhs_sim_bash.r` |
-| [`svhs_sim_manual.r`](./svhs_sim_manual.r) | manual running the `R` script under various scenarios (see comments in the script), should be used for Windows |
+| [`aas_basejson_empty_extended.xlsx`](./aas_basejson_empty_extended.xlsx) | empty base `.json` sheet to use for statistical variation, all options of `ntsc-rs` 0.9.2 are included |
+| [`aas_basejson_profile-nanda.xlsx`](./aas_basejson_profile-nanda.xlsx) | example profile sheet with pre-defined variation, also available as .tab |
+| [`aas_sim_helper.r`](./aas_sim_helper.r) | all `R` helper scripts |
+| [`aas_sim_bash.r`](./aas_sim_bash.r) | [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) call, suitable for `bash` under Linux, enable with `chmod +x aas_sim_bash.r` |
+| [`aas_sim_manual.r`](./aas_sim_manual.r) | manual running the `R` scripts under various scenarios, should work under Windows |
+| ('aas_sim_get-presets-bash.r')[./aas_sim_get-presets-bash.r] | bash download presets and profiles (`.json`, `.zip`) from 'ntsc-rs' presets discussion pages |
+| ('aas_sim_insert-profile-into-seet-from-json-bash.r')[./aas_sim_insert-profile-into-seet-from-json-bash.r] | [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) call for bash, writes a '.json' profile into a '.xlsx' basesheet|
 
+## Installation of `R` and its dependencies
 
-## `R` and its dependencies
+### 'ntsc-rs'
 
-`R` on Linux is best installed from the [`r-project`](https://cloud.r-project.org/bin/linux) page. There are instructions for various  distributions.
-Under Linux packages are compiled and not downloaded as binaries. For that one needs a basic compilation environment and if `dev` packages are missing, the `R` package install routine usually give out error messages that contain helpful information which package is missing exactly. So installation is in most cases straightforward.
-Normally under windows binaries are downloaded and installed from an `R` repo (mirror). Then no compilation is necessary.
+For the installation of ['ntsc-rs'](https://ntsc.rs) please refer it is mainpage.
 
-The script requires several `R` packages: `openxlsx`, `jsonlite`, `EnvStats`, `DescTools`, `prevalence`, and `argparse`. The best is to install them on the terminal by just running `R`. Do not use a GUI like `rstudio` because although as an IDE it is great, for installation of `R` packages it is buggy which means it often breaks with strange errors whereas `R` on the terminal does not break during install. Within `R` the packages can be installed along with their dependencies typing
+> [!WARNING]
+> If you are under Debian, the 'gstreamer' library has certain problems:
+
+- under `bullseye` the `ffv1` codec fails for video
+- under `bookworm` the `x264` is not contained in the `*debs` from the [deb-multimedia.org](https://deb-multimedia.org) repo. The file `/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstx264.so` is missing. Thus, do not use that repo by either removing it from the `apt` sources or by doing `apt` pinning so that the version from [debian.org](https://debian.org) is chosen over any other version. If unsure, do a
+
+'apt policy $DEBIANPACKAGE'
+
+to find out from which repo a package is installed. To find the associated package to a file type
+
+`dpkg -S $FULLPATH-TO-FILE`
+
+********
+
+The '*.debs' required to run ['ntsc-rs'](https://ntsc.rs/docs/standalone-installation) under Debian Linux are
+
+'''bash
+apt-get update
+apt-get install libgstreamer1.0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-alsa
+'''
+
+Either download the standalone version or compile by yourself. Good is to move the resulting two binaries (GUI, cli) to `/usr/local/bin`.
+
+### 'R'
+
+`R` on Linux or any other operation system is best installed from the [`r-project`](https://cloud.r-project.org/bin) page. There are instructions for various Linux distributions like Debian, Fedora/ Redhat, Ubuntu and Suse..
+
+### 'R' packages
+
+Under Linux `R` packages are compiled and not downloaded as binaries as it is the case with windows. For that one needs a basic compilation environment and if `dev` packages are missing, the `R` package install routine usually give out error messages that contain helpful information which package exactly is missing. So installation is in most cases straightforward.
+Normally under windows binaries are downloaded and installed from an `R` repo (mirror). Therefore no compilation is necessary.
+
+The script requires several `R` packages: `openxlsx`, `jsonlite`, `EnvStats`, `DescTools`, `prevalence`, and `argparse`.
+
+> [!WARNING]
+> The best is to install them on the terminal by just running `R` either as `$USER` (restricted installation) or system-wide as `root`. Do not use a GUI like `rstudio`, because although it is a great IDE for `R` development, it frequently fails for the installation of many `R` packages while giving out cryptic error messages that cannot be fixed. On the other hand simple  `R` on the terminal does not break during install unless a package is missing. Calling `R` on the terminal its packages can be installed along with their dependencies typing
 
 ```R
 packs <- c("openxlsx",
@@ -453,22 +867,34 @@ sapply(packs, function(x) install.packages(x, dep=T))
 
 ## Usage and Procedure
 
-A best practice can observe some guidelines:
+A best practice for the scripts here can observe some guidelines:
 
+- Take some time, this is nothing one can or should rush through.
 - One should start to use the GUI to get comfortable with it. Nothing should be imagined if one can just try it out on real material. Only then switch to the cli version.
-- Have a look on the links and on the github repo of `ntsc-rs` to explore the various pre-defined profiles to get an idea what they do to the material and what they do not.
+- Have a look on the links and on the github repo of `ntsc-rs` to explore the various pre-defined profiles to get an idea what they do to the material and what they do not - and what you actually need.
 - If one finds good anchor points ie. a suitable profile, save it as `.json` with a proper filename. Now anchor points are saved.
 - Proceed to tweak the lower and upper bounds of each parameter in the GUI to get a feeling what is within a personal accepted tolerance space. For some parameters this can make a huge difference, for others less, and some more one may not want to change at all.
 - Try the script for one or two images (videos) but with at least 10 or more variations. Compare the output for visible changes. If there are no real changes visible, go back to the sheet and increase e.g. the lower and upper bounds. If the changes are too much, go back to the GUI and try to udnerstand which parameters caused this and change them accordingly. Double-check whether all parameters that are allowed to be changed can actually be changed and vice versa.
-- Take some time, this is nothing one can or should rush through.
 - If the outputs and trials look good, try it on a larger bunch of images (videos). Videos naturally take much longer time. Before switching to video it makes sense to extract some frames from the video in question and use those as examples before applying profiles to the whole video. One can use `[ffmpeg](https://ffmpeg.org)` to extract frames or `[vlc player](https://www.videolan.org/vlc)`.
 
 
+## Worked example
+
+The file `example/aas_basejson_profile-nanda.xlsx` contains a sheet with a profile and pre-defined statistical variation. Associated is with `example/nanda.jpg' a source image
+
+![nanda](./example/nanda.jpg)
+
+and in the folder `example/aas_OUT/` the resulting simulated images (6 variations)
+
+| ![nanda_01](./example/nanda_01.png) | ![nanda_02](./example/nanda_02.png) |
+| ![nanda_03](./example/nanda_03.png) | ![nanda_04](./example/nanda_04.png) |
+| ![nanda_05](./example/nanda_05.png) | ![nanda_06](./example/nanda_06.png) |
+
 ## Limitations
 
-The `R` script was developed under Linux. In `theory` it works under windows as well, but may require some tweaks for the windows specific way to use paths in contrast to Linux. But as there are windows ports of `ntsc-rs` as well as all `R` packages should be available as binaries under windows, there is no real hindrance to try it out and change the `R` script to work under windows as well.
+The `R` script was developed under Linux. In `theory` it works under windows as well, but may require some tweaks for the windows specific way to use paths in contrast to Linux. But as there are windows ports of `ntsc-rs` as well as all `R` packages used here should be available as binaries under windows, there is no real hindrance no to try it out and change the `R` script to work under windows as well.
 
-The `R` script allows to work on an arbitrary number of images + videos + different variations for each type. But it does not mix or allows to use multiple profiles, For that one can write a wrapper that calls the R script and just hands over the `.json` profile(s).
+The `R` script allows to work on an arbitrary number of images + videos + different variations for each type. But it does not mix or allows to use multiple profiles, For that one can write a wrapper that calls the `R` script and just hands over the `.json` profile(s).
 
 The probablity distributions are fixed (see explanations). One can change the script to allow for a selection of distributions to draw values from it. The `create.samples()` function is the one where to look at.
 
@@ -482,90 +908,22 @@ NO WARRANTY of any kind is involved here. There is no guarantee that the softwar
 
 ## TODOs
 
-- add an open port for `R` code to insert one's own probability distributions.
+- add an open port for `R` code to insert (ie. directly passthrough `R` code) one's own probability distribution and associated parameters or whatever one wants to passthrough.
+
 
 ## License
 
 - `R` script [GPL v3](https://www.gnu.org/licenses/gpl-3.0.html)
-- every other software cited has its own licence - see links below for details
+- every other software cited has its own licence - please follow the cited links for details
 
 
-## Cited software
+## Cited software and addons
 
-- [`ntsc-rs`](https://ntsc.rs) - vhs simulator written in Rust
-- [`R`](https://www.r-project.org) - the lingua franca of statistics with thousands of packages
+- [`ntsc-rs`](https://ntsc.rs) - analogue artifact simulaton written in Rust
+- [`R`](https://www.r-project.org) - the lingua franca of statistics with thousands of [`R` packages](https://cran.r-project.org/web/packages/available_packages_by_name.html)
 - [`rstudio`](https://posit.co/downloads) - an IDE for R
 - [Debian Linux](https://www.debian.org) - rock stable Linux distribution
-
-
-
-
-
-######################
-
-"-b", "--basejson", type="character", default="/home/leo/library/DHAMMA/ntsc-rs/ntsc-rs/BASEjson_defaults_v3.xlsx",
-                    basejson xlsx sheet
-
-"-s", "--startfolder", type="character", default=c("/home/leo/library/DHAMMA/ntsc-rs"),
-                    set start folder as a base
-
-"-t", "--type", type="character", default=c("jpg","JPG","TIF","tif","BMP","bmp","PNG","png"),
-                    valid file endings (image: png, jpg, ... | video: mp4, mkv, ...) # c("mp4","MP4","mkv","MKV","mpg","MPG","mpeg","MPEG","vob","VOB")
-
-"-j", "--single", action="store_false", default=TRUE,
-                    create only a single frame as png [default: %(default)")
-
-"-i", "--sourcefolder", type="character", default=c("Gji_photos"),
-                    relative path to source files
-
-"-m", "--smaterial", type="character", default="image", # video
-                    source material (images, videos)
-
-"-x", "--targetfolder", type="character", default=c("/home/leo/library/DHAMMA/ntsc-rs/ntsc-rs-OUT"),
-                    relative path to images
-
-"-r", "--tempfolder", type="character", default=c("/tmp"),
-                    temporary folder for intermediate videos (can be a ramdisk/ ramfs)
-
-"-d", "--dry", action="store_true", default=FALSE,
-                    do not process anything / dry-run
-
-"-o", "--overwriteNO", action="store_false", default=TRUE,
-                    do not overwrite existent files
-
-"-u", "--each", type="integer", default=1,
-                    image variations per image
-
-"-c", "--compressionlevel", type="integer", default=6,
-                    compression level png (0=fast to 9=small)
-                    
-"-q", "--quality", type="integer", default=50,
-                    video quality level h264 (max. 50)
-
-"-e", "--encodingspeed", type="integer", default=5,
-                    encoding speed h264 (0-8)
-
-"-p", "--bitdepth", type="integer", default=8,
-                    bit depth ffv1 codec h264 (8, 10, 12)
-
-"-f", "--fps", type="integer", default=25,
-                    frames per second for (intermediate) video (h264)
-
-"-l", "--length", type="character", default=c("00:00:00.10"),
-                    length of intermediate video (h264) in HH:MM:SS.MS
-
-"-a", "--archive", action="store_true", default=FALSE,
-                    use ffv1 archive codec (lossless) instead of h264 for video [default: %(default)")
-
-"-z", "--seed", type="integer", default=996677,
-                    seed for randomness
-
-"-O", "--other", type="character", default=c(""),
-                    other options - passthrough! - pls see 'ntsc-rs-cli --help' [default: %(default)")
-
-"-v", "--verbose", action="store_true", default=FALSE,
-                    show more infos
-##########
-
-lynx -listonly -dump https://github.com/valadaptive/ntsc-rs/discussions/270|grep -E 'json|zip'| awk {'print $2 '}
+- [`presets`](https://github.com/valadaptive/ntsc-rs/discussions/categories/presets) - artifact profiles from the 'ntsc-rs' discussion presets pages, kindly uploaded and offered by a lot of users
+- [ffmpeg](https://ffmpeg.org) - a/v conversion suite for the terminal
+- [vlc player](https://www.videolan.org/vlc) - video player
 
