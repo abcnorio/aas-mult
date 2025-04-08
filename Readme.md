@@ -1,8 +1,6 @@
 <div align="center">
   <img src="https://github.com/abcnorio/aas-mult/blob/main/nanda_initial.png">
 </div>
-![nanda](./nanda_initial.png)
-
 
 # Analogue Artifacts Simulation (AAS) on multiple images/ videos using `ntsc-rs`
 
@@ -962,7 +960,9 @@ A best practice for the `R` scripts can stick to some guidelines:
 
 The file [`aas_basejson_profile-nanda.xlsx`](./example/aas_basejson_profile-nanda.xlsx) contains a sheet with a profile and pre-defined statistical variation. This refers to the source image `image_source/nanda.jpg'.
 
-![nanda](./image_source/nanda_PAL.jpg)
+<div align="center">
+  <img src="https://github.com/abcnorio/aas-mult/blob/main/image_source/nanda_PAL.jpg">
+</div>
 
 The folder `aas_ntsc-rs-OUT/` contains some of the resulting simulated images (10 variations). The call is
 
