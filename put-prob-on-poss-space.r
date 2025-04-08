@@ -1,3 +1,12 @@
+# URL
+# https://github.com/abcnorio/aas-sim-mult
+
+# (C) by abcnorio 2024-2025
+
+# licence
+# GPL v3
+# https://www.gnu.org/licenses/gpl-3.0.en.html
+
 # qualitative case
 
 # set seed

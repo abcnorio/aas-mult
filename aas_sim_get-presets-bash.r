@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 # URL
-# https://github.com/abcnorio/svhs-sim-mult
+# https://github.com/abcnorio/aas-sim-mult
 
 # (C) by abcnorio 2024-2025
 
