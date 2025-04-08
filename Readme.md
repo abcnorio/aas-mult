@@ -68,11 +68,11 @@ As a consequence of carefully applying the artifact related parameters to the or
 
 Although `ntsc-rs` roots in [composite-video-simulator](https://github.com/joncampbell123/composite-video-simulator) and [ntscqt](https://github.com/JargeZ/ntscqt) it contains nowadays more and more sources of signal degradation. A short outline of typical artifacts along with screenshots can be found on the cited repos. Amongst those the typical characteristics of dot crawl, ringing, chroma/ luma delay error aka color bleeding, rainbow effects, chrominance noise, head switching noise, long/ extended play, luminance noise, and oversaturation can be simulated - to name only the most predominant artifacts. An extensive overview about video artficats can be found on the [AV artifact atlas](http://www.avartifactatlas.com/tags.html#video). The ultimate goal is to simulate every of those video artifacts.
 
-`ntsc-rs` works as GUI and now with a cli version. Configurations are stored in `.json` files, ie. simple text files. One can find on the discussion forum of the github repo of `ntsc-rs` a lot of profiles for certain historical environments like VHS, SVHS, betacam, analogue TV and much more - carefully selected and developed by users and uploaded by them. Further [down](#TODOXXX) you can find a selection of published profiles. All of them can be used for simulation.
+`ntsc-rs` works as GUI and now with a cli version. Configurations are stored in `.json` files, ie. simple text files. One can find on the discussion forum of the github repo of `ntsc-rs` a lot of profiles for certain historical environments like VHS, SVHS, betacam, analogue TV and much more - carefully selected and developed by users and uploaded by them. Further down you can find a selection of published profiles. All of them can be used for simulation.
 
 Some of the profiles may not include all newest parameters of `ntsc-rs`. For such cases one has to re-check with the GUI for changes, and test those on real material to understand how those new parameters not covered by the `.json` profile works.
 
-The setup here allows to script the unattended generation of a large (arbitrarry) number of images or videos with a certain variation based on probabilities (see [below for details](#TODOXXX)). The scripts were developed and tested under [Debian Linux](https://www.debian.org) (`bookworm`, `12.9`) using ['R'](https://cran.r-project.org) version `4.4.2`.
+The setup here allows to script the unattended generation of a large (arbitrarry) number of images or videos with a certain variation based on probabilities (see further below for details). The scripts were developed and tested under [Debian Linux](https://www.debian.org) (`bookworm`, `12.9`) using ['R'](https://cran.r-project.org) version `4.4.2`.
 
 
 ## Implementation
@@ -381,7 +381,7 @@ The total number of possibilities to tweak `ntsc-rs` is huge:
 > length(samp.list) # number of parameters
 [1] 63
 > prod(sapply(samp.list,length)) # total numer of options
-[1] 1.927772e+90 ###TODO CHANGE
+[1] 6.690142e+94
 ```
 
 That's a substantial number of different possibilities **per image/ video**.
@@ -1010,4 +1010,4 @@ NO WARRANTY of any kind is involved here. There is no guarantee that the softwar
 - [`presets`](https://github.com/valadaptive/ntsc-rs/discussions/categories/presets) - artifact profiles from the `ntsc-rs` discussion presets pages, kindly uploaded and offered by a lot of users
 - [ffmpeg](https://ffmpeg.org) - a/v conversion suite for the terminal
 - [vlc player](https://www.videolan.org/vlc) - video player
-
+- Microsoft Windows - operation system
