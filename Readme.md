@@ -1006,8 +1006,12 @@ NO WARRANTY of any kind is involved here. There is no guarantee that the softwar
 - [`ntsc-rs`](https://ntsc.rs) - analogue artifact simulaton written in [`Rust`](https://www.rust-lang.org)
 - [`R`](https://www.r-project.org) - the lingua franca of statistics with thousands of [`R` packages](https://cran.r-project.org/web/packages/available_packages_by_name.html)
 - [`rstudio`](https://posit.co/downloads) - an IDE for R
-- [Debian Linux](https://www.debian.org) - rock stable Linux distribution
 - [`presets`](https://github.com/valadaptive/ntsc-rs/discussions/categories/presets) - artifact profiles from the `ntsc-rs` discussion presets pages, kindly uploaded and offered by a lot of users
 - [ffmpeg](https://ffmpeg.org) - a/v conversion suite for the terminal
 - [vlc player](https://www.videolan.org/vlc) - video player
+- [Debian Linux](https://www.debian.org) - rock stable Linux distribution
+- Fedora Linux - Linux operation system
+- Redhat Linux - Linux operation system
+- Ubuntu Linux - Linux operation system
+- Suse Linux - Linux operation system
 - Microsoft Windows - operation system
