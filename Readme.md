@@ -93,8 +93,59 @@ To call the `R` script via [`Rscript`](https://search.r-project.org/R/refmans/ut
 <summary>Click here to get an output of the possible parameters of `ass_bash_sim_bash.r`</summary>
 
 ```bash
-$ ./aas_sim_bash.r --help
-TODOXXX
+$  ./aas_sim_bash.r --help
+usage: ./aas_sim_bash.r [-h] [-n NTSCRS] [-b BASEJSON] [-s STARTFOLDER]
+                        [-t VALIDENDINGS] [-j] [-i SOURCEFOLDER]
+                        [-m SMATERIAL] [-x OUTFOLDER] [-d] [-o] [-u EACH]
+                        [-c COMPRESSIONLEVEL] [-q QUALITY] [-e ENCODINGSPEED]
+                        [-p BITDEPTH] [-f FPS] [-l LENGTH] [-a] [-z SEED]
+                        [-g OTHER] [-v] [-y]
+
+options:
+  -h, --help            show this help message and exit
+  -n NTSCRS, --ntscrs NTSCRS
+                        path to ntsc-rs-cli binary [default:
+                        /usr/local/bin/ntsc-rs-cli]
+  -b BASEJSON, --basejson BASEJSON
+                        basejson xlsx sheet [default:
+                        example/aas_basejson_profile-nanda.xlsx]
+  -s STARTFOLDER, --startfolder STARTFOLDER
+                        set start folder as a base [default: ]
+  -t VALIDENDINGS, --validendings VALIDENDINGS
+                        valid file endings (image: png, jpg, ... | video: mp4,
+                        mkv, ...) [default: ('jpg', 'JPG', 'TIF', 'tif',
+                        'BMP', 'bmp', 'PNG', 'png')]
+  -j, --NOsingleframe   create no single frame as png ie. video [default:
+                        False]
+  -i SOURCEFOLDER, --sourcefolder SOURCEFOLDER
+                        relative path to source files [default: image_source]
+  -m SMATERIAL, --smaterial SMATERIAL
+                        source material (images, videos) [default: image]
+  -x OUTFOLDER, --outfolder OUTFOLDER
+                        relative path to output folder [default: TEST_ntsc-rs-
+                        OUT]
+  -d, --dryrun          do not process anything / dry-run [default: True]
+  -o, --NOoverwrite     do not overwrite existent files [default: False]
+  -u EACH, --each EACH  image variations per image [default: 1]
+  -c COMPRESSIONLEVEL, --compressionlevel COMPRESSIONLEVEL
+                        compression level png (0=fast to 9=small) [default: 6]
+  -q QUALITY, --quality QUALITY
+                        video quality level h264 (max. 50) [default: 50]
+  -e ENCODINGSPEED, --encodingspeed ENCODINGSPEED
+                        encoding speed h264 (0-8) [default: 5]
+  -p BITDEPTH, --bitdepth BITDEPTH
+                        bit depth ffv1 codec h264 (8, 10, 12) [default: 8]
+  -f FPS, --fps FPS     frames per second for (intermediate) video (h264)
+                        [default: 25]
+  -l LENGTH, --length LENGTH
+                        length of intermediate video (h264) in MM:SS.MS
+                        [default: 00:05.00]
+  -a, --archive         use ffv1 archive codec [default: False]
+  -z SEED, --seed SEED  seed for randomness [default: 996677]
+  -g OTHER, --other OTHER
+                        options to passthrough to ntsc-rs-cli [default: ]
+  -v, --verbose         show more infos [default: True]
+  -y, --fullrandom      create full random json profile [default: False]
 ```
 
 </details>
@@ -633,7 +684,7 @@ probs1 <- dnorm(chroma_delay_vertical, mean=-10, sd=5)
 plot(chroma_delay_vertical,probs1, type="l", col="darkred")
 ```
 
-![chroma delay vertical normal distribution with mean=-10 and sd=5](.plots/cdv_mean-minus10_sd5.png)
+![chroma delay vertical normal distribution with mean=-10 and sd=5](./plots/cdv_mean-minus10_sd5.png)
 
 Now we can sample from the `chroma_delay_vertical` sample space (defined between -20,+20) based on the normal distribution with mean=-10 and sd=5. Sampling single cases is as always unpredictable:
 
@@ -834,8 +885,8 @@ The repo contains the following files relevant to run the scripts.
 | [`aas_sim_helper.r`](./aas_sim_helper.r) | This contains all `R` helper scripts. |
 | [`aas_sim_bash.r`](./aas_sim_bash.r) | [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) call, suitable for `bash` under Linux. Enable it with `chmod +x aas_sim_bash.r`. |
 | [`aas_sim_manual.r`](./aas_sim_manual.r) | This script shows the manual running the `R` scripts under various scenarios. It should work under Windows. |
-| (`aas_sim_get-presets-bash.r`)[./aas_sim_get-presets-bash.r] | This bash call downloads presets and profiles (`.json`, `.zip`) from 'ntsc-rs' presets discussion pages. |
-| (`aas_sim_insert-profile-into-seet-from-json-bash.r`)[./aas_sim_insert-profile-into-seet-from-json-bash.r] | [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) call for bash, reads a '.json' profile and writes it into a simple unformatted '.xlsx' base json heet.|
+| [`aas_sim_get-presets-bash.r`](./aas_sim_get-presets-bash.r) | This bash call downloads presets and profiles (`.json`, `.zip`) from 'ntsc-rs' presets discussion pages. |
+| [`aas_sim_insert-profile-into-seet-from-json-bash.r`](./aas_sim_insert-profile-into-seet-from-json-bash.r) | [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) call for bash, reads a '.json' profile and writes it into a simple unformatted '.xlsx' base json heet.|
 
 ## Installation of `R` and its dependencies
 
@@ -844,16 +895,14 @@ The repo contains the following files relevant to run the scripts.
 For the installation of [`ntsc-rs`](https://ntsc.rs) please refer it is main page.
 
 > [!WARNING]
-> If you are under Debian, the `gstreamer` library shows certain problems:
+> If you are under Debian, the `gstreamer` library shows certain problems with the video encoders.
 
 - Under `bullseye` the `ffv1` codec fails for video
-- uUnder `bookworm` the `x264` encoder is not contained in the `*debs` from the [deb-multimedia.org](https://deb-multimedia.org) repo. The file `/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstx264.so` is missing. Thus, do not use that repo by either removing it from the `apt` sources or by doing `apt` pinning so that the version from [debian.org](https://debian.org) is chosen over any other version. If unsure, do a
+- Under `bookworm` the `x264` encoder is not contained in the `*debs` from the [deb-multimedia.org](https://deb-multimedia.org) repo. The file `/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstx264.so` is missing. Thus, do not use that repo by either removing it from the `apt` sources or by doing `apt` pinning so that the version from [debian.org](https://debian.org) is chosen over any other version.
 
-`apt policy $DEBIANPACKAGE`
+If unsure, do a `apt policy $DEBIANPACKAGE` to find out from which repo a package is installed.
 
-to find out from which repo a package is installed. Additionally, to find the associated `deb` package to a file, type
-
-`dpkg -S $FULLPATH-TO-FILE`
+Additionally, to find the associated `deb` package to a file, type `dpkg -S $FULLPATH-TO-FILE`.
 
 The `*.debs` required to run [`ntsc-rs`](https://ntsc.rs/docs/standalone-installation) under Debian Linux are
 
@@ -906,13 +955,15 @@ A best practice for the `R` scripts can stick to some guidelines:
 
 The file `example/aas_basejson_profile-nanda.xlsx` contains a sheet with a profile and pre-defined statistical variation. This refers to the source image `example/nanda.jpg'.
 
-![nanda](./example/nanda.jpg)
+![nanda](./image_source/nanda_PAL.jpg)
 
 The folder `example/aas_OUT/` contains some of the resulting simulated images (6 variations).
 
-| ![nanda_01](./example/nanda_01.png) | ![nanda_02](./example/nanda_02.png) |
-| ![nanda_03](./example/nanda_03.png) | ![nanda_04](./example/nanda_04.png) |
-| ![nanda_05](./example/nanda_05.png) | ![nanda_06](./example/nanda_06.png) |
+| ![nanda_01](./aas_ntsc-rs-OUT/nanda_PAL_01.png) | ![nanda_02](./aas_ntsc-rs-OUT/nanda_PAL_02.png) |
+| ![nanda_03](./aas_ntsc-rs-OUT/nanda_PAL_03.png) | ![nanda_04](./aas_ntsc-rs-OUT/nanda_PAL_04.png) |
+| ![nanda_05](./aas_ntsc-rs-OUT/nanda_PAL_05.png) | ![nanda_06](./aas_ntsc-rs-OUT/nanda_PAL_06.png) |
+| ![nanda_05](./aas_ntsc-rs-OUT/nanda_PAL_07.png) | ![nanda_06](./aas_ntsc-rs-OUT/nanda_PAL_08.png) |
+| ![nanda_05](./aas_ntsc-rs-OUT/nanda_PAL_09.png) | ![nanda_06](./aas_ntsc-rs-OUT/nanda_PAL_10.png) |
 
 ## Limitations
 
