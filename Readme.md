@@ -959,6 +959,8 @@ The file `example/aas_basejson_profile-nanda.xlsx` contains a sheet with a profi
 
 The folder `example/aas_OUT/` contains some of the resulting simulated images (6 variations).
 
+| | |
+| --- | --- |
 | ![nanda_01](./aas_ntsc-rs-OUT/nanda_PAL_01.png) | ![nanda_02](./aas_ntsc-rs-OUT/nanda_PAL_02.png) |
 | ![nanda_03](./aas_ntsc-rs-OUT/nanda_PAL_03.png) | ![nanda_04](./aas_ntsc-rs-OUT/nanda_PAL_04.png) |
 | ![nanda_05](./aas_ntsc-rs-OUT/nanda_PAL_05.png) | ![nanda_06](./aas_ntsc-rs-OUT/nanda_PAL_06.png) |
