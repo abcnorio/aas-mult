@@ -121,11 +121,11 @@ options:
   -i SOURCEFOLDER, --sourcefolder SOURCEFOLDER
                         relative path to source files [default: image_source]
   -m SMATERIAL, --smaterial SMATERIAL
-                        source material (images, videos) [default: image]
+                        source material (image, video) [default: image]
   -x OUTFOLDER, --outfolder OUTFOLDER
                         relative path to output folder [default: TEST_ntsc-rs-
                         OUT]
-  -d, --dryrun          do not process anything / dry-run [default: True]
+  -d, --NOdryrun        do not process anything / dry-run [default: False]
   -o, --NOoverwrite     do not overwrite existent files [default: False]
   -u EACH, --each EACH  image variations per image [default: 1]
   -c COMPRESSIONLEVEL, --compressionlevel COMPRESSIONLEVEL
