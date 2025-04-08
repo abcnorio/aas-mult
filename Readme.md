@@ -162,14 +162,14 @@ The explanations of the options of the `R` script are the same for the manual as
 | Switch | Description | Default value |
 | --- | --- | --- |
 | `-n`, `--ntscrs` | path to `ntsc-rs-cli` | `/usr/local/bin/ntsc-rs-cli`|
-| `-b`, `--basejson` | path to control sheet | `` |
-| `-s`, `--startfolder` | base folder of image(s) or video(s) | `` |
+| `-b`, `--basejson` | path to control sheet | `example/aas_basejson_profile-nanda.xlsx` |
+| `-s`, `--startfolder` | base folder of image(s) or video(s) | `./` |
 | `-t`, `--validendings` | enabled file-endings for image [image: jpg,JPG,tif,TIF,bmp,BMP,png,PNG] and video [avi,AVI, mp4, MP4, mkv, MKV, vob, VOB] |
 | `-j`, `--NOsingleframe` | create only single frame as png | `TRUE` |
 | `-i`, `--sourcefolder` | relative path to source files | `image_source` for image and `video_source` for video |
 | `-m`, `--smaterial` | source material (video, image) | `image` |
-| `-x`, `--outfolder` | relative path to output folder | `ntsc-rs-OUT` |
-| `-d`, `--dryrun` | do a dry-run | `FALSE` |
+| `-x`, `--outfolder` | relative path to output folder | `aas_ntsc-rs-OUT` |
+| `-d`, `--NOdryrun` | do not perform a dry-run | `FALSE` |
 | `-o`, `--NOoverwrite` | do not overwrite existent files | `TRUE` |
 | `-u`, `--each` | number of variations per image/ video | `1` |
 | `-c`, `--compressionlevel` | only png (0=fastest, 9=smallest) | `6` |
