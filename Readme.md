@@ -891,7 +891,7 @@ The repo contains the following files relevant to run the scripts.
 | [`aas_sim_bash.r`](./aas_sim_bash.r) | [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) call, suitable for `bash` under Linux. Enable it with `chmod +x aas_sim_bash.r`. |
 | [`aas_sim_manual.r`](./aas_sim_manual.r) | This script shows the manual running the `R` scripts under various scenarios. It should work under Windows. |
 | [`aas_sim_get-presets-bash.r`](./aas_sim_get-presets-bash.r) | This bash call downloads presets and profiles (`.json`, `.zip`) from 'ntsc-rs' presets discussion pages. |
-| [`aas_sim_insert-profile-into-seet-from-json-bash.r`](./aas_sim_insert-profile-into-seet-from-json-bash.r) | [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) call for bash, reads a '.json' profile and writes it into a simple unformatted '.xlsx' base json heet.|
+| [`aas_sim_insert-profile-into-sheet-from-json-bash.r`](./aas_sim_insert-profile-into-sheet-from-json-bash.r) | [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) call for bash, reads a `.json` profile and writes it into a simple unformatted `.xlsx` base json heet.|
 
 ## Installation of `R` and its dependencies
 
