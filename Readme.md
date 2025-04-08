@@ -156,7 +156,7 @@ options:
 </details>
 
 > [!IMPORTANT]
-> Be aware that the bash call requires to provide proper paths. E.g. if a video should be created from a video, the sourcefolder should contain video(s), otherwise it will fail. And the resulting error message may be cryptic, because the `R` script fails when this info is required. In short - the scripts do **not** provide every possible error check. It's up to the user to call the script properly.
+> Be aware that the bash call requires to provide proper paths and other parameters. E.g. if a video should be created from a video, the sourcefolder should contain video(s), otherwise it will fail. And the resulting error message may be cryptic, because the `R` script fails when this info is required. In short - the scripts do **not** provide every possible error check. Same is true if other parameters are chosen not as described. It's up to the user to call the script properly.
 
 ## Options
 
