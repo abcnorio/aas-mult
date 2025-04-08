@@ -1,6 +1,4 @@
-<p align="center" width="100%">
-    <img width="32%" src="nanda_initial.png>
-</p>
+| | ![nanda](./nanda_initial.png) | |
 
 
 # Analogue Artifacts Simulation (AAS) on multiple images/ videos using `ntsc-rs`
