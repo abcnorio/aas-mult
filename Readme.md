@@ -953,11 +953,17 @@ A best practice for the `R` scripts can stick to some guidelines:
 
 ## Worked example
 
-The file `example/aas_basejson_profile-nanda.xlsx` contains a sheet with a profile and pre-defined statistical variation. This refers to the source image `example/nanda.jpg'.
+The file [`aas_basejson_profile-nanda.xlsx`](./example/aas_basejson_profile-nanda.xlsx) contains a sheet with a profile and pre-defined statistical variation. This refers to the source image `image_source/nanda.jpg'.
 
 ![nanda](./image_source/nanda_PAL.jpg)
 
-The folder `example/aas_OUT/` contains some of the resulting simulated images (6 variations).
+The folder `aas_ntsc-rs-OUT/` contains some of the resulting simulated images (10 variations). The call is
+
+```R
+./aas_sim_bash.r --NOdryrun --each=10
+```
+
+and leave the rest to default values.
 
 | | |
 | --- | --- |
