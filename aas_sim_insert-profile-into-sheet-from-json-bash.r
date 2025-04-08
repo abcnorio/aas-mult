@@ -17,11 +17,11 @@ none <- lapply(libs, suppressPackageStartupMessages(library), quietly=TRUE, warn
 #invisible(lapply(libs, library, character.only=TRUE))
 
 # manual
-basejson.empty.nam <- c("BASE_settings/svhs_basejson_empty_extended.xlsx")
+basejson.empty.nam <- c("aas_basejson_empty_extended.xlsx")
 # default
 # basejson.profile <- c("preset.json")
-basejson.profile <- c("BASE_settings/nanda_preset.json")
-basejson.filled.nam <- c("svhs_basejson_profile-nanda.xlsx")
+basejson.profile <- c("nanda_initial.json")
+basejson.filled.nam <- c("aas_basejson_profile-nanda-initial.xlsx")
 profile.nam <- c("nanda")
 ignore <- FALSE
 
