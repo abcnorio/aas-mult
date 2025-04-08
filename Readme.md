@@ -1,3 +1,6 @@
+<div align="center">
+  <img src="https://github.com/abcnorio/aas-mult/blob/main/nanda_initial.png">
+</div>
 ![nanda](./nanda_initial.png)
 
 
