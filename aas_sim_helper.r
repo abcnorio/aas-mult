@@ -547,6 +547,7 @@ apply.ntscrs <- function(basejson.sheet=NULL,
 
   # create samp.list
   samp.list <- create.seqs(basejson.sheet=basejson.sheet, seed=seed)
+  #prod(sapply(samp.list,length)) 
   
   # create params.out
   if(fullrandom == TRUE)
