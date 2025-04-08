@@ -882,7 +882,7 @@ The repo contains the following files relevant to run the scripts.
 | Filename | Description |
 | --- | --- |
 | [`aas_basejson_empty_extended.xlsx`](./aas_basejson_empty_extended.xlsx) | This is an empty base `.json` sheet to use for statistical variation. All options of `ntsc-rs` 0.9.2 are included. Use it to put in a profile and save it with a different name. |
-| [`aas_basejson_profile-nanda.xlsx`](./aas_basejson_profile-nanda.xlsx) | This is an example profile sheet with pre-defined variation. |
+| [`aas_basejson_profile-nanda.xlsx`](./example/aas_basejson_profile-nanda.xlsx) | This is an example profile sheet with pre-defined variation. |
 | [`aas_sim_helper.r`](./aas_sim_helper.r) | This contains all `R` helper scripts. |
 | [`aas_sim_bash.r`](./aas_sim_bash.r) | [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) call, suitable for `bash` under Linux. Enable it with `chmod +x aas_sim_bash.r`. |
 | [`aas_sim_manual.r`](./aas_sim_manual.r) | This script shows the manual running the `R` scripts under various scenarios. It should work under Windows. |
