@@ -10,7 +10,7 @@
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 
 # get helper functions
-source("svhs_sim_helper.r")
+source("aas_sim_helper.r")
 
 # required libs - install them separately
 libs <- c("argparse")
@@ -19,7 +19,7 @@ none <- sapply(libs, suppressPackageStartupMessages(library), quietly=TRUE, warn
 # manual
 baseurl <- c("https://github.com/valadaptive/ntsc-rs/discussions/categories/presets")
 file.exts <- c("zip","json")
-outputfolder <- c("ntsc-rs_sim_presets")
+outputfolder <- c("aas-sim_presets")
 presets.fnam <- paste(format(Sys.time(), "%Y-%M-%d"),"_ntsc-rs_presets-from-repo.md",sep="")
 UNZIP <- TRUE
 forcedownload <- FALSE

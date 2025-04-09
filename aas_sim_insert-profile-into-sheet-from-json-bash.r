@@ -49,7 +49,7 @@ args <- parser$parse_args()
 print(args)
 
 # matching args and vars
-basejson.empty.nam <- args$basehseet
+basejson.empty.nam <- args$basesheet
 basejson.profile <- args$basejsonprofile
 basejson.filled.nam <- args$output
 profile.nam <- args$profile
