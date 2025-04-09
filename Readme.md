@@ -44,7 +44,7 @@
 
 ## Goal
 
-The `R` scripts hosted here allow to script [`ntsc-rs`](https://ntsc.rs) for an arbitrary number of images or videos based on a profile (presets) using the `.json` format of `ntsc-rs`. It introduces a certain controllable amount of statistical variation arranged by the user using a simple spreadsheet. This ensures that each image (video) works with slightly different parameters within the tolerance space defined by the user. In the spreadsheet the user can configure how the variation should take place for **every possible parameter** of `ntsc-rs`.
+The `R` scripts hosted here allow to script [ntsc-rs](https://ntsc.rs) for an arbitrary number of images or videos based on a profile (presets) using the `.json` format of `ntsc-rs`. It introduces a certain controllable amount of statistical variation arranged by the user using a simple spreadsheet. This ensures that each image (video) works with slightly different parameters within the tolerance space defined by the user. In the spreadsheet the user can configure how the variation should take place for **every possible parameter** of `ntsc-rs`.
 
 
 ## Use cases
@@ -66,7 +66,7 @@ For AI/ML inference the [vsgan-tensorrt docker](https://github.com/styler00dolla
 
 ## Overview
 
-The software [`ntsc-rs`](https://ntsc.rs) written in [`Rust`](https://www.rust-lang.org) allows users to simulate old analogue TV, (S)VHS, betacam, and other associated artifacts. Actually it should be named not as` ntsc` but as **analog artifacts simulation**, because the artifacts e.g. due to normal decay of magnetic tape originally occurs to PAL/ SECAM tapes as well, not just to NTSC tapes. And simulating pure analogue TV without any storage devices like video tapes can be done for PAL/ SECAM as well. The original basic work for `ntsc-rs` was realized by the [composite video simulator](https://github.com/joncampbell123/composite-video-simulator).
+The software [ntsc-rs](https://ntsc.rs) written in [Rust](https://www.rust-lang.org) allows users to simulate old analogue TV, (S)VHS, betacam, and other associated artifacts. Actually it should be named not as` ntsc` but as **analog artifacts simulation**, because the artifacts e.g. due to normal decay of magnetic tape originally occurs to PAL/ SECAM tapes as well, not just to NTSC tapes. And simulating pure analogue TV without any storage devices like video tapes can be done for PAL/ SECAM as well. The original basic work for `ntsc-rs` was realized by the [composite video simulator](https://github.com/joncampbell123/composite-video-simulator).
 
 As a consequence of carefully applying the artifact related parameters to the original footage the outcome looks like an old (S)VHS tape/ TV/ ... with all visible and known artifacts in dependence to the degree and intensity of its configuration. The sum of those configs equals a profile, a set of presets.
 
@@ -156,7 +156,7 @@ options:
 </details>
 
 > [!IMPORTANT]
-> Be aware that the bash call requires to provide proper paths and other parameters. E.g. if a video should be created from a video, the sourcefolder should contain video(s), otherwise it will fail. And the resulting error message may be cryptic, because the `R` script fails when this info is required. In short - the scripts do **not** provide every possible error check. Same is true if other parameters are chosen not as described. It's up to the user to call the script properly. In case of doubt have a look at [`aas_sim_manual.r`](./aas_sim_manual.r) variants how to call each scenario directly in R.
+> Be aware that the bash call requires to provide proper paths and other parameters. E.g. if a video should be created from a video, the sourcefolder should contain video(s), otherwise it will fail. And the resulting error message may be cryptic, because the `R` script fails when this info is required. In short - the scripts do **not** provide every possible error check. Same is true if other parameters are chosen not as described. It's up to the user to call the script properly. In case of doubt have a look at [aas_sim_manual.r](./aas_sim_manual.r) variants how to call each scenario directly in R.
 
 ## Options
 
