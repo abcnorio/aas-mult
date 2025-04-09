@@ -7,11 +7,10 @@
 ## TOC
 
 - [Advance Organizer](#advance-organizer)
-- [Goal](#goal)
 - [Use cases](#use-cases)
 - [Overview](#overview)
 - [Implementation](#implementation)
-- [Bash Call](#bash-call)
+- [Bash call](#bash-call)
 - [Options](#options)
 - [Artifacts profiles and presets](#artifacts-profiles-and-presets)
 - [Prerequisites of statistical work](#prerequisites-of-statistical-work)
@@ -41,11 +40,7 @@
 
 ## Advance Organizer
 
-
-## Goal
-
-The `R` scripts hosted here allow to script [ntsc-rs](https://ntsc.rs) for an arbitrary number of images or videos based on a profile (presets) using the `.json` format of `ntsc-rs`. It introduces a certain controllable amount of statistical variation arranged by the user using a simple spreadsheet. This ensures that each image (video) works with slightly different parameters within the tolerance space defined by the user. In the spreadsheet the user can configure how the variation should take place for **every possible parameter** of `ntsc-rs`.
-
+The goal is to enable the simulation of analogue artifacts using the cli version of [ntsc-rs](https://ntsc.rs) for an arbitrary number of images or videos based on a profile (presets) using the `.json` format of ntsc-rs. Statistical considerations are used to introduce slightly different profiles (presets) for each outcome. Multiple outcomes per source (image, video) are possible. The configuration of a profile and its variation is done via a simple spreadsheet that works with a preset acting as an anchor point for each parameter of ntsc-rs. This anchor point is varied by putting a probability distribution on the possibility space of each parameter and then draw random samples from it. In the spreadsheet the user can configure separately for each parameter the anchor points as well as certain characteristics of their underlying pre-defined probability distribution. The scheduled distribution is not nature-given but just a reasonable choice, and different choices are possible or even recommended. In relation to the parameter the data types (category, integer, linear, non-linear) go along with pre-defined probability distributions (uniform, truncated normal, beta, simple random). The user does not have to understand the underlying math. It is sufficient to insert meaningful values (e.g. lower/ upper limit, standard deviation, weights like 4|3|2|2 to describe the relationships of four categories, ...) required for each parameter and its associated probability distribution. Inserting some numbers into the sheet is all what has to be done unless someone is capable of changing the script and embed a different probability distribution. Under such circumstances the sheet requires only to change the name of the probability distribution and add meaningful values that describe it clearly. The script written in 'R' reads the values from the sheet, opens up the possibility space for each parameter, draws random samples from that, and applies the configuration by creating '.json' files for each variation. In the end it calls 'ntsc-rs-cli' to create the planned outcomes (image, video). The statstical variation is necessary to avoid unrealistic uniformity of influences esp. if it comes to image preparation of AI/ML fine-tuning. The amount of possible variation (limits or tolerance space) has to be tried out by working with the GUI 'ntsc-rs-standalone' on real target material using visual inspection. There is no way around that effort which takes time and should be taken seriously. It helps to start with a preset uploaded by users that may offer a good base like e.g. VHS, analogue TV, SVHS, betacam, etc. The tweaking of a profile with the GUI requires to carefully change each parameter value to create an anchor point and to understand changes and limits (lower, upper bounds), and the impact of each parameter on the outcome. The visual inspection is subjective in its nature which means there is no objective measurement. The number of probability distributions is limited, but the script in general allows to embed arbitrary probability distributions. A full random mode allows to create a complete random profile. Additional scripts allow to download (`.zip`, `.json`) all profiles from the `ntsc-rs` github repo discussion pages published by users as well as another script can be used to embed a `.json` profile created by 'ntsc-rs-standalone' into a configuration spreadsheet as a base for the statistical considerations and preparations.
 
 ## Use cases
 
