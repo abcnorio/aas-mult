@@ -11,7 +11,7 @@
 - [Use cases](#use-cases)
 - [Overview](#overview)
 - [Implementation](#implementation)
-- [Call](#call)
+- [Bash Call](#bash-call)
 - [Options](#options)
 - [Artifacts profiles and presets](#artifacts-profiles-and-presets)
 - [Prerequisites of statistical work](#prerequisites-of-statistical-work)
@@ -89,9 +89,9 @@ The actual `R` functions to simulate and introduce statistical concepts are sepa
 All options not covered by the `R` script call can be passed through without any cross-checks by the script directly to `ntsc-rs-cli` via the '-g OPTIONS' or '--other OPTIONS' so  can make use of them. A user has to take care that those calls are proper.
 
 
-## Call
+## Bash call
 
-To call the `R` script via [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) on the terminal is straightforward. The same can be achieved by using `R` directly and calling the functions manually using [aas_sim_manual.r](./aas_sim_manual.r). The `Rscript` bash call has multiple options.
+To call the `R` script via [Rscript](https://search.r-project.org/R/refmans/utils/html/Rscript.html) on the terminal is straightforward. The same can be achieved by using `R` directly and calling the functions manually using [aas_sim_manual.r](./aas_sim_manual.r). The `Rscript` bash call has multiple options.
 
 <details>
 
@@ -156,7 +156,7 @@ options:
 </details>
 
 > [!IMPORTANT]
-> Be aware that the bash call requires to provide proper paths and other parameters. E.g. if a video should be created from a video, the sourcefolder should contain video(s), otherwise it will fail. And the resulting error message may be cryptic, because the `R` script fails when this info is required. In short - the scripts do **not** provide every possible error check. Same is true if other parameters are chosen not as described. It's up to the user to call the script properly.
+> Be aware that the bash call requires to provide proper paths and other parameters. E.g. if a video should be created from a video, the sourcefolder should contain video(s), otherwise it will fail. And the resulting error message may be cryptic, because the `R` script fails when this info is required. In short - the scripts do **not** provide every possible error check. Same is true if other parameters are chosen not as described. It's up to the user to call the script properly. In case of doubt have a look at [`aas_sim_manual.r`](./aas_sim_manual.r) variants how to call each scenario directly in R.
 
 ## Options
 
@@ -196,7 +196,7 @@ The explanations of the options of the `R` script are the same for the manual as
 
 ## Artifact profiles and presets
 
-The following profiles can be found on the github repo of `ntsc-rs`, section [discussion](https://github.com/valadaptive/ntsc-rs/discussions) and sub-section [presets](https://github.com/valadaptive/ntsc-rs/discussions/categories/presets). The credit goes to the selected users who developed and kindly published it. The `R` script [`svhs_sim_get-presets-bash.r`](./svhs_sim_get-presets-bash.r) collects all `zip` and `json` files from the github discussion sub-section [`presets`](https://github.com/valadaptive/ntsc-rs/discussions/categories/presets) of `ntsc-rs` and downloads them locally (see `aas_sim_get-presets-bash.r --help` for further options). Those are [status quo 2025-04-03]:
+The following profiles can be found on the github repo of `ntsc-rs`, section [discussion](https://github.com/valadaptive/ntsc-rs/discussions) and sub-section [presets](https://github.com/valadaptive/ntsc-rs/discussions/categories/presets). The credit goes to the selected users who developed and kindly published it. The `R` script [aas_sim_get-presets-bash.r](./aas_sim_get-presets-bash.r) collects all `zip` and `json` files from the github discussion sub-section [presets](https://github.com/valadaptive/ntsc-rs/discussions/categories/presets) of `ntsc-rs` and downloads them locally (see `aas_sim_get-presets-bash.r --help` for further options). Those are [status quo 2025-04-03]:
 
 <details>
 
@@ -888,19 +888,19 @@ The repo contains the following files relevant to run the scripts.
 
 | Filename | Description |
 | --- | --- |
-| [`aas_basejson_empty_extended.xlsx`](./aas_basejson_empty_extended.xlsx) | This is an empty base `.json` sheet to use for statistical variation. All options of `ntsc-rs` 0.9.2 are included. Use it to put in a profile and save it with a different name. |
-| [`aas_basejson_profile-nanda.xlsx`](./example/aas_basejson_profile-nanda.xlsx) | This is an example profile sheet with pre-defined variation. |
-| [`aas_sim_helper.r`](./aas_sim_helper.r) | This contains all `R` helper scripts. |
-| [`aas_sim_bash.r`](./aas_sim_bash.r) | [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) call, suitable for `bash` under Linux. Enable it with `chmod +x aas_sim_bash.r`. |
-| [`aas_sim_manual.r`](./aas_sim_manual.r) | This script shows the manual running the `R` scripts under various scenarios. It should work under Windows. |
-| [`aas_sim_get-presets-bash.r`](./aas_sim_get-presets-bash.r) | This bash call downloads presets and profiles (`.json`, `.zip`) from 'ntsc-rs' presets discussion pages. |
-| [`aas_sim_insert-profile-into-sheet-from-json-bash.r`](./aas_sim_insert-profile-into-sheet-from-json-bash.r) | [`Rscript`](https://search.r-project.org/R/refmans/utils/html/Rscript.html) call for bash, reads a `.json` profile and writes it into a simple unformatted `.xlsx` base json heet.|
+| [aas_basejson_empty_extended.xlsx](./aas_basejson_empty_extended.xlsx) | This is an empty base `.json` sheet to use for statistical variation. All options of `ntsc-rs` 0.9.2 are included. Use it to put in a profile and save it with a different name. |
+| [aas_basejson_profile-nanda.xlsx](./example/aas_basejson_profile-nanda.xlsx) | This is an example profile sheet with pre-defined variation. |
+| [aas_sim_helper.r](./aas_sim_helper.r) | This contains all `R` helper scripts. |
+| [aas_sim_bash.r](./aas_sim_bash.r) | [Rscript](https://search.r-project.org/R/refmans/utils/html/Rscript.html) call, suitable for `bash` under Linux. Enable it with `chmod +x aas_sim_bash.r`. |
+| [aas_sim_manual.r](./aas_sim_manual.r) | This script shows the manual running the `R` scripts under various scenarios. It should work under Windows. |
+| [aas_sim_get-presets-bash.r](./aas_sim_get-presets-bash.r) | This bash call downloads presets and profiles (`.json`, `.zip`) from 'ntsc-rs' presets discussion pages. |
+| [aas_sim_insert-profile-into-sheet-from-json-bash.r](./aas_sim_insert-profile-into-sheet-from-json-bash.r) | [Rscript](https://search.r-project.org/R/refmans/utils/html/Rscript.html) call for bash, reads a `.json` profile and writes it into a simple unformatted `.xlsx` base json heet.|
 
 ## Installation of `R` and its dependencies
 
 ### `ntsc-rs`
 
-For the installation of [`ntsc-rs`](https://ntsc.rs) please refer it is main page.
+For the installation of [ntsc-rs](https://ntsc.rs) please refer it is main page.
 
 > [!WARNING]
 > If you are under Debian, the `gstreamer` library shows certain problems with the video encoders.
@@ -912,7 +912,7 @@ If unsure, do a `apt policy $DEBIANPACKAGE` to find out from which repo a packag
 
 Additionally, to find the associated `deb` package to a file, type `dpkg -S $FULLPATH-TO-FILE`.
 
-The `*.debs` required to run [`ntsc-rs`](https://ntsc.rs/docs/standalone-installation) under Debian Linux are
+The `*.debs` required to run [ntsc-rs](https://ntsc.rs/docs/standalone-installation) under Debian Linux are
 
 ```bash
 apt-get update
@@ -923,7 +923,7 @@ Either download the standalone version or compile by yourself. Good is to move t
 
 ### `R`
 
-`R` on Linux or any other operation system is best installed from the [`r-project`](https://cloud.r-project.org/bin) page. There are instructions for various Linux distributions like Debian, Fedora/ Redhat, Ubuntu and Suse..
+`R` on Linux or any other operation system is best installed from the [R-project](https://cloud.r-project.org/bin) page. There are instructions for various Linux distributions like Debian, Fedora/ Redhat, Ubuntu and Suse..
 
 ### `R` packages
 
@@ -956,12 +956,12 @@ A best practice for the `R` scripts can stick to some guidelines:
 - If one finds good anchor points ie. a suitable profile, save it as a `.json` with a proper filename. Now anchor points are saved.
 - Proceed to tweak the lower and upper bounds of each parameter in the GUI to get a feeling what is within a personal accepted tolerance space. For some parameters this can make a huge difference, for others less, and some more one may not want to change at all.
 - Try the script for one or two images (videos) but with at least 10 or more variations. Compare the output for visible changes. If there are no real changes visible, go back to the sheet and increase e.g. the lower and upper bounds. If the changes are too much, go back to the GUI and try to udnerstand which parameters caused this and change them accordingly. Double-check whether all parameters that are allowed to be changed can actually be changed and vice versa.
-- If the outputs and trials look good, try it on a larger bunch of images (videos). Videos naturally take much longer time. Before switching to video it makes sense to extract some frames from the video in question and use those as examples before applying profiles to the whole video. One can use [`ffmpeg`](https://ffmpeg.org) to extract frames or [`vlc player`](https://www.videolan.org/vlc).
+- If the outputs and trials look good, try it on a larger bunch of images (videos). Videos naturally take much longer time. Before switching to video it makes sense to extract some frames from the video in question and use those as examples before applying profiles to the whole video. One can use [ffmpeg](https://ffmpeg.org) to extract frames or [vlc player](https://www.videolan.org/vlc).
 
 
 ## Worked example
 
-The file [`aas_basejson_profile-nanda.xlsx`](./example/aas_basejson_profile-nanda.xlsx) contains a sheet with a profile and pre-defined statistical variation. This refers to the source image `image_source/nanda.jpg'.
+The file [aas_basejson_profile-nanda.xlsx](./example/aas_basejson_profile-nanda.xlsx) contains a sheet with a profile and pre-defined statistical variation. This refers to the source image `image_source/nanda.jpg'.
 
 <div align="center">
   <img src="https://github.com/abcnorio/aas-mult/blob/main/image_source/nanda_PAL.jpg">
@@ -1002,6 +1002,7 @@ NO WARRANTY of any kind is involved here. There is no guarantee that the softwar
 ## TODOs
 
 - add an open port for `R` code to insert (ie. directly passthrough `R` code) one's own probability distribution and associated parameters or whatever one wants to passthrough.
+- add more error checks to prevent wrong usage of bash calls by user.
 
 
 ## License
@@ -1012,10 +1013,10 @@ NO WARRANTY of any kind is involved here. There is no guarantee that the softwar
 
 ## Cited software and addons
 
-- [`ntsc-rs`](https://ntsc.rs) - analogue artifact simulaton written in [`Rust`](https://www.rust-lang.org)
-- [`R`](https://www.r-project.org) - the lingua franca of statistics with thousands of [`R` packages](https://cran.r-project.org/web/packages/available_packages_by_name.html)
-- [`rstudio`](https://posit.co/downloads) - an IDE for R
-- [`presets`](https://github.com/valadaptive/ntsc-rs/discussions/categories/presets) - artifact profiles from the `ntsc-rs` discussion presets pages, kindly uploaded and offered by a lot of users
+- [ntsc-rs](https://ntsc.rs) - analogue artifact simulaton written in [Rust](https://www.rust-lang.org)
+- [R](https://www.r-project.org) - the lingua franca of statistics with thousands of [R packages](https://cran.r-project.org/web/packages/available_packages_by_name.html)
+- [rstudio](https://posit.co/downloads) - an IDE for R
+- [presets](https://github.com/valadaptive/ntsc-rs/discussions/categories/presets) - artifact profiles from the `ntsc-rs` discussion presets pages, kindly uploaded and offered by a lot of users
 - [ffmpeg](https://ffmpeg.org) - a/v conversion suite for the terminal
 - [vlc player](https://www.videolan.org/vlc) - video player
 - [Debian Linux](https://www.debian.org) - rock stable Linux distribution
